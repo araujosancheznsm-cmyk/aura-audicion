@@ -9,8 +9,62 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as ServiciosRouteImport } from './routes/servicios'
+import { Route as NosotrosRouteImport } from './routes/nosotros'
+import { Route as MarcasRouteImport } from './routes/marcas'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as ContactoRouteImport } from './routes/contacto'
+import { Route as BlogRouteImport } from './routes/blog'
+import { Route as AudifonosRouteImport } from './routes/audifonos'
+import { Route as AccesoriosRouteImport } from './routes/accesorios'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServiciosRoute = ServiciosRouteImport.update({
+  id: '/servicios',
+  path: '/servicios',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NosotrosRoute = NosotrosRouteImport.update({
+  id: '/nosotros',
+  path: '/nosotros',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarcasRoute = MarcasRouteImport.update({
+  id: '/marcas',
+  path: '/marcas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactoRoute = ContactoRouteImport.update({
+  id: '/contacto',
+  path: '/contacto',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AudifonosRoute = AudifonosRouteImport.update({
+  id: '/audifonos',
+  path: '/audifonos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccesoriosRoute = AccesoriosRouteImport.update({
+  id: '/accesorios',
+  path: '/accesorios',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +73,158 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/accesorios': typeof AccesoriosRoute
+  '/audifonos': typeof AudifonosRoute
+  '/blog': typeof BlogRoute
+  '/contacto': typeof ContactoRoute
+  '/faq': typeof FaqRoute
+  '/marcas': typeof MarcasRoute
+  '/nosotros': typeof NosotrosRoute
+  '/servicios': typeof ServiciosRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/accesorios': typeof AccesoriosRoute
+  '/audifonos': typeof AudifonosRoute
+  '/blog': typeof BlogRoute
+  '/contacto': typeof ContactoRoute
+  '/faq': typeof FaqRoute
+  '/marcas': typeof MarcasRoute
+  '/nosotros': typeof NosotrosRoute
+  '/servicios': typeof ServiciosRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/accesorios': typeof AccesoriosRoute
+  '/audifonos': typeof AudifonosRoute
+  '/blog': typeof BlogRoute
+  '/contacto': typeof ContactoRoute
+  '/faq': typeof FaqRoute
+  '/marcas': typeof MarcasRoute
+  '/nosotros': typeof NosotrosRoute
+  '/servicios': typeof ServiciosRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/accesorios'
+    | '/audifonos'
+    | '/blog'
+    | '/contacto'
+    | '/faq'
+    | '/marcas'
+    | '/nosotros'
+    | '/servicios'
+    | '/sitemap.xml'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/accesorios'
+    | '/audifonos'
+    | '/blog'
+    | '/contacto'
+    | '/faq'
+    | '/marcas'
+    | '/nosotros'
+    | '/servicios'
+    | '/sitemap.xml'
+  id:
+    | '__root__'
+    | '/'
+    | '/accesorios'
+    | '/audifonos'
+    | '/blog'
+    | '/contacto'
+    | '/faq'
+    | '/marcas'
+    | '/nosotros'
+    | '/servicios'
+    | '/sitemap.xml'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AccesoriosRoute: typeof AccesoriosRoute
+  AudifonosRoute: typeof AudifonosRoute
+  BlogRoute: typeof BlogRoute
+  ContactoRoute: typeof ContactoRoute
+  FaqRoute: typeof FaqRoute
+  MarcasRoute: typeof MarcasRoute
+  NosotrosRoute: typeof NosotrosRoute
+  ServiciosRoute: typeof ServiciosRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/servicios': {
+      id: '/servicios'
+      path: '/servicios'
+      fullPath: '/servicios'
+      preLoaderRoute: typeof ServiciosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nosotros': {
+      id: '/nosotros'
+      path: '/nosotros'
+      fullPath: '/nosotros'
+      preLoaderRoute: typeof NosotrosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/marcas': {
+      id: '/marcas'
+      path: '/marcas'
+      fullPath: '/marcas'
+      preLoaderRoute: typeof MarcasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contacto': {
+      id: '/contacto'
+      path: '/contacto'
+      fullPath: '/contacto'
+      preLoaderRoute: typeof ContactoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/audifonos': {
+      id: '/audifonos'
+      path: '/audifonos'
+      fullPath: '/audifonos'
+      preLoaderRoute: typeof AudifonosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/accesorios': {
+      id: '/accesorios'
+      path: '/accesorios'
+      fullPath: '/accesorios'
+      preLoaderRoute: typeof AccesoriosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,17 +237,16 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AccesoriosRoute: AccesoriosRoute,
+  AudifonosRoute: AudifonosRoute,
+  BlogRoute: BlogRoute,
+  ContactoRoute: ContactoRoute,
+  FaqRoute: FaqRoute,
+  MarcasRoute: MarcasRoute,
+  NosotrosRoute: NosotrosRoute,
+  ServiciosRoute: ServiciosRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
