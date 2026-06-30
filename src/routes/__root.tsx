@@ -92,6 +92,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Aura Audición · Volver a escuchar la vida" },
+      { name: "description", content: "Aura Clarity Project is a premium website for Aura Audición, showcasing modern hearing aids and audiology services." },
+      { property: "og:description", content: "Aura Clarity Project is a premium website for Aura Audición, showcasing modern hearing aids and audiology services." },
+      { name: "twitter:description", content: "Aura Clarity Project is a premium website for Aura Audición, showcasing modern hearing aids and audiology services." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/fa3bd2ca-56fa-4232-885f-66703a876455/id-preview-11244b89--0306dbe8-0824-4418-9851-6c95096ccb83.lovable.app-1782853631521.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/fa3bd2ca-56fa-4232-885f-66703a876455/id-preview-11244b89--0306dbe8-0824-4418-9851-6c95096ccb83.lovable.app-1782853631521.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
