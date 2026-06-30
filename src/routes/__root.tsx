@@ -77,19 +77,29 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Aura Audición · Volver a escuchar la vida" },
+      {
+        name: "description",
+        content:
+          "Centro audiológico premium en Independencia, Lima. Evaluación, adaptación y venta de audífonos Oticon y Unitron. Agenda tu evaluación auditiva.",
+      },
+      { name: "author", content: "Aura Audición" },
+      { name: "theme-color", content: "#1d4d7a" },
+      { property: "og:title", content: "Aura Audición · Volver a escuchar la vida" },
+      {
+        property: "og:description",
+        content: "Centro audiológico premium con tecnología Oticon y Unitron en Lima.",
+      },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: appCss,
+        href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap",
       },
     ],
   }),
@@ -113,13 +123,21 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+import { Header } from "@/components/site/Header";
+import { Footer } from "@/components/site/Footer";
+import { WhatsAppFloat } from "@/components/site/WhatsAppFloat";
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <Header />
+      <main className="min-h-screen">
+        <Outlet />
+      </main>
+      <Footer />
+      <WhatsAppFloat />
     </QueryClientProvider>
   );
 }
