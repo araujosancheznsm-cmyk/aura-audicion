@@ -20,8 +20,10 @@ import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AudifonosRouteImport } from './routes/audifonos'
 import { Route as AccesoriosRouteImport } from './routes/accesorios'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CatalogoSlugRouteImport } from './routes/catalogo.$slug'
+import { Route as AuthenticatedAdminCatalogoRouteImport } from './routes/_authenticated/admin.catalogo'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -78,6 +80,10 @@ const AccesoriosRoute = AccesoriosRouteImport.update({
   path: '/accesorios',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -88,6 +94,12 @@ const CatalogoSlugRoute = CatalogoSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => CatalogoRoute,
 } as any)
+const AuthenticatedAdminCatalogoRoute =
+  AuthenticatedAdminCatalogoRouteImport.update({
+    id: '/admin/catalogo',
+    path: '/admin/catalogo',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -103,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/servicios': typeof ServiciosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/catalogo/$slug': typeof CatalogoSlugRoute
+  '/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -118,10 +131,12 @@ export interface FileRoutesByTo {
   '/servicios': typeof ServiciosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/catalogo/$slug': typeof CatalogoSlugRoute
+  '/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/accesorios': typeof AccesoriosRoute
   '/audifonos': typeof AudifonosRoute
   '/auth': typeof AuthRoute
@@ -134,6 +149,7 @@ export interface FileRoutesById {
   '/servicios': typeof ServiciosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/catalogo/$slug': typeof CatalogoSlugRoute
+  '/_authenticated/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -151,6 +167,7 @@ export interface FileRouteTypes {
     | '/servicios'
     | '/sitemap.xml'
     | '/catalogo/$slug'
+    | '/admin/catalogo'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -166,9 +183,11 @@ export interface FileRouteTypes {
     | '/servicios'
     | '/sitemap.xml'
     | '/catalogo/$slug'
+    | '/admin/catalogo'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/accesorios'
     | '/audifonos'
     | '/auth'
@@ -181,10 +200,12 @@ export interface FileRouteTypes {
     | '/servicios'
     | '/sitemap.xml'
     | '/catalogo/$slug'
+    | '/_authenticated/admin/catalogo'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AccesoriosRoute: typeof AccesoriosRoute
   AudifonosRoute: typeof AudifonosRoute
   AuthRoute: typeof AuthRoute
@@ -277,6 +298,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccesoriosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -291,8 +319,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CatalogoSlugRouteImport
       parentRoute: typeof CatalogoRoute
     }
+    '/_authenticated/admin/catalogo': {
+      id: '/_authenticated/admin/catalogo'
+      path: '/admin/catalogo'
+      fullPath: '/admin/catalogo'
+      preLoaderRoute: typeof AuthenticatedAdminCatalogoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminCatalogoRoute: typeof AuthenticatedAdminCatalogoRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminCatalogoRoute: AuthenticatedAdminCatalogoRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 interface CatalogoRouteChildren {
   CatalogoSlugRoute: typeof CatalogoSlugRoute
@@ -308,6 +354,7 @@ const CatalogoRouteWithChildren = CatalogoRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AccesoriosRoute: AccesoriosRoute,
   AudifonosRoute: AudifonosRoute,
   AuthRoute: AuthRoute,
