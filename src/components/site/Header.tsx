@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Logo } from "./Logo";
-import { NAV, SITE } from "@/lib/site";
+import { NAV } from "@/lib/site";
 import { Button } from "@/components/ui/button";
 
 export function Header() {
