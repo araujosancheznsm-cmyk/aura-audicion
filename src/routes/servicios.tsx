@@ -6,15 +6,16 @@ import { Button } from "@/components/ui/button";
 import { Stethoscope, AudioLines, Settings2, SlidersHorizontal, ShoppingBag, Package, Sparkles, Wrench, ShieldCheck } from "lucide-react";
 
 const SERVICES = [
-  { i: Stethoscope, t: "Evaluación audiológica", d: "Diagnóstico integral con anamnesis, otoscopía y pruebas funcionales." },
-  { i: AudioLines, t: "Audiometría tonal y vocal", d: "Medición precisa de umbrales auditivos en cabina insonorizada." },
+  { i: Stethoscope, t: "Video otoscopia", d: "Exploración visual del canal auditivo y tímpano con cámara de alta definición." },
+  { i: AudioLines, t: "Audiometría", d: "Medición precisa de umbrales auditivos por vía aérea y ósea en cabina insonorizada." },
+  { i: AudioLines, t: "Logoaudiometría", d: "Evaluación de la comprensión del habla a distintas intensidades." },
   { i: Settings2, t: "Adaptación de audífonos", d: "Selección del modelo ideal según pérdida, estilo de vida y presupuesto." },
   { i: SlidersHorizontal, t: "Programación", d: "Ajuste fino en tiempo real con software certificado de Oticon y Unitron." },
   { i: ShoppingBag, t: "Venta de audífonos", d: "Modelos premium recargables, invisibles, pediátricos y de súper potencia." },
   { i: Package, t: "Accesorios", d: "TV Connector, micrófonos remotos, cargadores, domos, filtros y más." },
   { i: Sparkles, t: "Limpieza profesional", d: "Servicio de mantenimiento preventivo para prolongar la vida útil." },
   { i: Wrench, t: "Reparación", d: "Diagnóstico técnico y reparación con repuestos originales." },
-  { i: ShieldCheck, t: "Mantenimiento", d: "Planes de seguimiento programado para garantizar el mejor rendimiento." },
+  { i: ShieldCheck, t: "Garantía de 1 año", d: "Todos los audífonos incluyen garantía oficial de un año." },
 ];
 
 export const Route = createFileRoute("/servicios")({
