@@ -34,7 +34,7 @@ function Servicios() {
   return (
     <>
       <PageHero eyebrow="Servicios" title="Soluciones auditivas integrales">
-        Acompañamiento desde el primer diagnóstico hasta el mantenimiento de por vida.
+        Evaluación completa en 45 minutos y acompañamiento desde el primer diagnóstico hasta el mantenimiento de por vida.
       </PageHero>
       <Section>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
