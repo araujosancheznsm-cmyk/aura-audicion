@@ -11,7 +11,7 @@ export const SITE = {
     { d: "Sábados", h: "9:00 a.m. – 2:00 p.m." },
     { d: "Domingos", h: "Cerrado" },
   ],
-  email: "contacto@auraaudicion.pe",
+  email: "sedegeneralaura@gmail.com",
 };
 
 export const NAV = [
