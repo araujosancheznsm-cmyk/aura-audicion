@@ -24,6 +24,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CatalogoSlugRouteImport } from './routes/catalogo.$slug'
 import { Route as AuthenticatedAdminCatalogoRouteImport } from './routes/_authenticated/admin.catalogo'
+import { Route as AuthenticatedAdminCatalogoIdRouteImport } from './routes/_authenticated/admin.catalogo.$id'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -100,6 +101,12 @@ const AuthenticatedAdminCatalogoRoute =
     path: '/admin/catalogo',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminCatalogoIdRoute =
+  AuthenticatedAdminCatalogoIdRouteImport.update({
+    id: '/$id',
+    path: '/$id',
+    getParentRoute: () => AuthenticatedAdminCatalogoRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -115,7 +122,8 @@ export interface FileRoutesByFullPath {
   '/servicios': typeof ServiciosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/catalogo/$slug': typeof CatalogoSlugRoute
-  '/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
+  '/admin/catalogo': typeof AuthenticatedAdminCatalogoRouteWithChildren
+  '/admin/catalogo/$id': typeof AuthenticatedAdminCatalogoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -131,7 +139,8 @@ export interface FileRoutesByTo {
   '/servicios': typeof ServiciosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/catalogo/$slug': typeof CatalogoSlugRoute
-  '/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
+  '/admin/catalogo': typeof AuthenticatedAdminCatalogoRouteWithChildren
+  '/admin/catalogo/$id': typeof AuthenticatedAdminCatalogoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -149,7 +158,8 @@ export interface FileRoutesById {
   '/servicios': typeof ServiciosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/catalogo/$slug': typeof CatalogoSlugRoute
-  '/_authenticated/admin/catalogo': typeof AuthenticatedAdminCatalogoRoute
+  '/_authenticated/admin/catalogo': typeof AuthenticatedAdminCatalogoRouteWithChildren
+  '/_authenticated/admin/catalogo/$id': typeof AuthenticatedAdminCatalogoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -168,6 +178,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/catalogo/$slug'
     | '/admin/catalogo'
+    | '/admin/catalogo/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -184,6 +195,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/catalogo/$slug'
     | '/admin/catalogo'
+    | '/admin/catalogo/$id'
   id:
     | '__root__'
     | '/'
@@ -201,6 +213,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/catalogo/$slug'
     | '/_authenticated/admin/catalogo'
+    | '/_authenticated/admin/catalogo/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -326,15 +339,36 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminCatalogoRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/catalogo/$id': {
+      id: '/_authenticated/admin/catalogo/$id'
+      path: '/$id'
+      fullPath: '/admin/catalogo/$id'
+      preLoaderRoute: typeof AuthenticatedAdminCatalogoIdRouteImport
+      parentRoute: typeof AuthenticatedAdminCatalogoRoute
+    }
   }
 }
 
+interface AuthenticatedAdminCatalogoRouteChildren {
+  AuthenticatedAdminCatalogoIdRoute: typeof AuthenticatedAdminCatalogoIdRoute
+}
+
+const AuthenticatedAdminCatalogoRouteChildren: AuthenticatedAdminCatalogoRouteChildren =
+  {
+    AuthenticatedAdminCatalogoIdRoute: AuthenticatedAdminCatalogoIdRoute,
+  }
+
+const AuthenticatedAdminCatalogoRouteWithChildren =
+  AuthenticatedAdminCatalogoRoute._addFileChildren(
+    AuthenticatedAdminCatalogoRouteChildren,
+  )
+
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAdminCatalogoRoute: typeof AuthenticatedAdminCatalogoRoute
+  AuthenticatedAdminCatalogoRoute: typeof AuthenticatedAdminCatalogoRouteWithChildren
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminCatalogoRoute: AuthenticatedAdminCatalogoRoute,
+  AuthenticatedAdminCatalogoRoute: AuthenticatedAdminCatalogoRouteWithChildren,
 }
 
 const AuthenticatedRouteRouteWithChildren =
