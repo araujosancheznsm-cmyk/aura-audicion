@@ -11,14 +11,14 @@ export const SITE = {
     { d: "Sábados", h: "9:00 a.m. – 2:00 p.m." },
     { d: "Domingos", h: "Cerrado" },
   ],
-  email: "contacto@auraaudicion.pe",
+  email: "sedegeneralaura@gmail.com",
 };
 
 export const NAV = [
   { to: "/", label: "Inicio" },
   { to: "/nosotros", label: "Nosotros" },
   { to: "/servicios", label: "Servicios" },
-  { to: "/audifonos", label: "Audífonos" },
+  { to: "/catalogo", label: "Catálogo" },
   { to: "/marcas", label: "Marcas" },
   { to: "/accesorios", label: "Accesorios" },
   { to: "/blog", label: "Blog" },

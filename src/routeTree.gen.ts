@@ -15,10 +15,16 @@ import { Route as NosotrosRouteImport } from './routes/nosotros'
 import { Route as MarcasRouteImport } from './routes/marcas'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactoRouteImport } from './routes/contacto'
+import { Route as CatalogoRouteImport } from './routes/catalogo'
 import { Route as BlogRouteImport } from './routes/blog'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AudifonosRouteImport } from './routes/audifonos'
 import { Route as AccesoriosRouteImport } from './routes/accesorios'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CatalogoSlugRouteImport } from './routes/catalogo.$slug'
+import { Route as AuthenticatedAdminCatalogoRouteImport } from './routes/_authenticated/admin.catalogo'
+import { Route as AuthenticatedAdminCatalogoIdRouteImport } from './routes/_authenticated/admin.catalogo.$id'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -50,9 +56,19 @@ const ContactoRoute = ContactoRouteImport.update({
   path: '/contacto',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CatalogoRoute = CatalogoRouteImport.update({
+  id: '/catalogo',
+  path: '/catalogo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogRoute = BlogRouteImport.update({
   id: '/blog',
   path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AudifonosRoute = AudifonosRouteImport.update({
@@ -65,48 +81,85 @@ const AccesoriosRoute = AccesoriosRouteImport.update({
   path: '/accesorios',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CatalogoSlugRoute = CatalogoSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => CatalogoRoute,
+} as any)
+const AuthenticatedAdminCatalogoRoute =
+  AuthenticatedAdminCatalogoRouteImport.update({
+    id: '/admin/catalogo',
+    path: '/admin/catalogo',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminCatalogoIdRoute =
+  AuthenticatedAdminCatalogoIdRouteImport.update({
+    id: '/$id',
+    path: '/$id',
+    getParentRoute: () => AuthenticatedAdminCatalogoRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/accesorios': typeof AccesoriosRoute
   '/audifonos': typeof AudifonosRoute
+  '/auth': typeof AuthRoute
   '/blog': typeof BlogRoute
+  '/catalogo': typeof CatalogoRouteWithChildren
   '/contacto': typeof ContactoRoute
   '/faq': typeof FaqRoute
   '/marcas': typeof MarcasRoute
   '/nosotros': typeof NosotrosRoute
   '/servicios': typeof ServiciosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/catalogo/$slug': typeof CatalogoSlugRoute
+  '/admin/catalogo': typeof AuthenticatedAdminCatalogoRouteWithChildren
+  '/admin/catalogo/$id': typeof AuthenticatedAdminCatalogoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/accesorios': typeof AccesoriosRoute
   '/audifonos': typeof AudifonosRoute
+  '/auth': typeof AuthRoute
   '/blog': typeof BlogRoute
+  '/catalogo': typeof CatalogoRouteWithChildren
   '/contacto': typeof ContactoRoute
   '/faq': typeof FaqRoute
   '/marcas': typeof MarcasRoute
   '/nosotros': typeof NosotrosRoute
   '/servicios': typeof ServiciosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/catalogo/$slug': typeof CatalogoSlugRoute
+  '/admin/catalogo': typeof AuthenticatedAdminCatalogoRouteWithChildren
+  '/admin/catalogo/$id': typeof AuthenticatedAdminCatalogoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/accesorios': typeof AccesoriosRoute
   '/audifonos': typeof AudifonosRoute
+  '/auth': typeof AuthRoute
   '/blog': typeof BlogRoute
+  '/catalogo': typeof CatalogoRouteWithChildren
   '/contacto': typeof ContactoRoute
   '/faq': typeof FaqRoute
   '/marcas': typeof MarcasRoute
   '/nosotros': typeof NosotrosRoute
   '/servicios': typeof ServiciosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/catalogo/$slug': typeof CatalogoSlugRoute
+  '/_authenticated/admin/catalogo': typeof AuthenticatedAdminCatalogoRouteWithChildren
+  '/_authenticated/admin/catalogo/$id': typeof AuthenticatedAdminCatalogoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -114,44 +167,63 @@ export interface FileRouteTypes {
     | '/'
     | '/accesorios'
     | '/audifonos'
+    | '/auth'
     | '/blog'
+    | '/catalogo'
     | '/contacto'
     | '/faq'
     | '/marcas'
     | '/nosotros'
     | '/servicios'
     | '/sitemap.xml'
+    | '/catalogo/$slug'
+    | '/admin/catalogo'
+    | '/admin/catalogo/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/accesorios'
     | '/audifonos'
+    | '/auth'
     | '/blog'
+    | '/catalogo'
     | '/contacto'
     | '/faq'
     | '/marcas'
     | '/nosotros'
     | '/servicios'
     | '/sitemap.xml'
+    | '/catalogo/$slug'
+    | '/admin/catalogo'
+    | '/admin/catalogo/$id'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/accesorios'
     | '/audifonos'
+    | '/auth'
     | '/blog'
+    | '/catalogo'
     | '/contacto'
     | '/faq'
     | '/marcas'
     | '/nosotros'
     | '/servicios'
     | '/sitemap.xml'
+    | '/catalogo/$slug'
+    | '/_authenticated/admin/catalogo'
+    | '/_authenticated/admin/catalogo/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AccesoriosRoute: typeof AccesoriosRoute
   AudifonosRoute: typeof AudifonosRoute
+  AuthRoute: typeof AuthRoute
   BlogRoute: typeof BlogRoute
+  CatalogoRoute: typeof CatalogoRouteWithChildren
   ContactoRoute: typeof ContactoRoute
   FaqRoute: typeof FaqRoute
   MarcasRoute: typeof MarcasRoute
@@ -204,11 +276,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/catalogo': {
+      id: '/catalogo'
+      path: '/catalogo'
+      fullPath: '/catalogo'
+      preLoaderRoute: typeof CatalogoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog': {
       id: '/blog'
       path: '/blog'
       fullPath: '/blog'
       preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/audifonos': {
@@ -225,6 +311,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccesoriosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -232,14 +325,75 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/catalogo/$slug': {
+      id: '/catalogo/$slug'
+      path: '/$slug'
+      fullPath: '/catalogo/$slug'
+      preLoaderRoute: typeof CatalogoSlugRouteImport
+      parentRoute: typeof CatalogoRoute
+    }
+    '/_authenticated/admin/catalogo': {
+      id: '/_authenticated/admin/catalogo'
+      path: '/admin/catalogo'
+      fullPath: '/admin/catalogo'
+      preLoaderRoute: typeof AuthenticatedAdminCatalogoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/catalogo/$id': {
+      id: '/_authenticated/admin/catalogo/$id'
+      path: '/$id'
+      fullPath: '/admin/catalogo/$id'
+      preLoaderRoute: typeof AuthenticatedAdminCatalogoIdRouteImport
+      parentRoute: typeof AuthenticatedAdminCatalogoRoute
+    }
   }
 }
 
+interface AuthenticatedAdminCatalogoRouteChildren {
+  AuthenticatedAdminCatalogoIdRoute: typeof AuthenticatedAdminCatalogoIdRoute
+}
+
+const AuthenticatedAdminCatalogoRouteChildren: AuthenticatedAdminCatalogoRouteChildren =
+  {
+    AuthenticatedAdminCatalogoIdRoute: AuthenticatedAdminCatalogoIdRoute,
+  }
+
+const AuthenticatedAdminCatalogoRouteWithChildren =
+  AuthenticatedAdminCatalogoRoute._addFileChildren(
+    AuthenticatedAdminCatalogoRouteChildren,
+  )
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminCatalogoRoute: typeof AuthenticatedAdminCatalogoRouteWithChildren
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminCatalogoRoute: AuthenticatedAdminCatalogoRouteWithChildren,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
+interface CatalogoRouteChildren {
+  CatalogoSlugRoute: typeof CatalogoSlugRoute
+}
+
+const CatalogoRouteChildren: CatalogoRouteChildren = {
+  CatalogoSlugRoute: CatalogoSlugRoute,
+}
+
+const CatalogoRouteWithChildren = CatalogoRoute._addFileChildren(
+  CatalogoRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AccesoriosRoute: AccesoriosRoute,
   AudifonosRoute: AudifonosRoute,
+  AuthRoute: AuthRoute,
   BlogRoute: BlogRoute,
+  CatalogoRoute: CatalogoRouteWithChildren,
   ContactoRoute: ContactoRoute,
   FaqRoute: FaqRoute,
   MarcasRoute: MarcasRoute,
