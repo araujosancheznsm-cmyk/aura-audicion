@@ -17,6 +17,7 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactoRouteImport } from './routes/contacto'
 import { Route as CatalogoRouteImport } from './routes/catalogo'
 import { Route as BlogRouteImport } from './routes/blog'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AudifonosRouteImport } from './routes/audifonos'
 import { Route as AccesoriosRouteImport } from './routes/accesorios'
 import { Route as IndexRouteImport } from './routes/index'
@@ -62,6 +63,11 @@ const BlogRoute = BlogRouteImport.update({
   path: '/blog',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AudifonosRoute = AudifonosRouteImport.update({
   id: '/audifonos',
   path: '/audifonos',
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/accesorios': typeof AccesoriosRoute
   '/audifonos': typeof AudifonosRoute
+  '/auth': typeof AuthRoute
   '/blog': typeof BlogRoute
   '/catalogo': typeof CatalogoRouteWithChildren
   '/contacto': typeof ContactoRoute
@@ -101,6 +108,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/accesorios': typeof AccesoriosRoute
   '/audifonos': typeof AudifonosRoute
+  '/auth': typeof AuthRoute
   '/blog': typeof BlogRoute
   '/catalogo': typeof CatalogoRouteWithChildren
   '/contacto': typeof ContactoRoute
@@ -116,6 +124,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/accesorios': typeof AccesoriosRoute
   '/audifonos': typeof AudifonosRoute
+  '/auth': typeof AuthRoute
   '/blog': typeof BlogRoute
   '/catalogo': typeof CatalogoRouteWithChildren
   '/contacto': typeof ContactoRoute
@@ -132,6 +141,7 @@ export interface FileRouteTypes {
     | '/'
     | '/accesorios'
     | '/audifonos'
+    | '/auth'
     | '/blog'
     | '/catalogo'
     | '/contacto'
@@ -146,6 +156,7 @@ export interface FileRouteTypes {
     | '/'
     | '/accesorios'
     | '/audifonos'
+    | '/auth'
     | '/blog'
     | '/catalogo'
     | '/contacto'
@@ -160,6 +171,7 @@ export interface FileRouteTypes {
     | '/'
     | '/accesorios'
     | '/audifonos'
+    | '/auth'
     | '/blog'
     | '/catalogo'
     | '/contacto'
@@ -175,6 +187,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccesoriosRoute: typeof AccesoriosRoute
   AudifonosRoute: typeof AudifonosRoute
+  AuthRoute: typeof AuthRoute
   BlogRoute: typeof BlogRoute
   CatalogoRoute: typeof CatalogoRouteWithChildren
   ContactoRoute: typeof ContactoRoute
@@ -243,6 +256,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/audifonos': {
       id: '/audifonos'
       path: '/audifonos'
@@ -290,6 +310,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccesoriosRoute: AccesoriosRoute,
   AudifonosRoute: AudifonosRoute,
+  AuthRoute: AuthRoute,
   BlogRoute: BlogRoute,
   CatalogoRoute: CatalogoRouteWithChildren,
   ContactoRoute: ContactoRoute,
