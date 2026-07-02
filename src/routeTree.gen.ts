@@ -15,6 +15,7 @@ import { Route as NosotrosRouteImport } from './routes/nosotros'
 import { Route as MarcasRouteImport } from './routes/marcas'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactoRouteImport } from './routes/contacto'
+import { Route as CatalogoRouteImport } from './routes/catalogo'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AudifonosRouteImport } from './routes/audifonos'
 import { Route as AccesoriosRouteImport } from './routes/accesorios'
@@ -50,6 +51,11 @@ const ContactoRoute = ContactoRouteImport.update({
   path: '/contacto',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CatalogoRoute = CatalogoRouteImport.update({
+  id: '/catalogo',
+  path: '/catalogo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogRoute = BlogRouteImport.update({
   id: '/blog',
   path: '/blog',
@@ -76,6 +82,7 @@ export interface FileRoutesByFullPath {
   '/accesorios': typeof AccesoriosRoute
   '/audifonos': typeof AudifonosRoute
   '/blog': typeof BlogRoute
+  '/catalogo': typeof CatalogoRoute
   '/contacto': typeof ContactoRoute
   '/faq': typeof FaqRoute
   '/marcas': typeof MarcasRoute
@@ -88,6 +95,7 @@ export interface FileRoutesByTo {
   '/accesorios': typeof AccesoriosRoute
   '/audifonos': typeof AudifonosRoute
   '/blog': typeof BlogRoute
+  '/catalogo': typeof CatalogoRoute
   '/contacto': typeof ContactoRoute
   '/faq': typeof FaqRoute
   '/marcas': typeof MarcasRoute
@@ -101,6 +109,7 @@ export interface FileRoutesById {
   '/accesorios': typeof AccesoriosRoute
   '/audifonos': typeof AudifonosRoute
   '/blog': typeof BlogRoute
+  '/catalogo': typeof CatalogoRoute
   '/contacto': typeof ContactoRoute
   '/faq': typeof FaqRoute
   '/marcas': typeof MarcasRoute
@@ -115,6 +124,7 @@ export interface FileRouteTypes {
     | '/accesorios'
     | '/audifonos'
     | '/blog'
+    | '/catalogo'
     | '/contacto'
     | '/faq'
     | '/marcas'
@@ -127,6 +137,7 @@ export interface FileRouteTypes {
     | '/accesorios'
     | '/audifonos'
     | '/blog'
+    | '/catalogo'
     | '/contacto'
     | '/faq'
     | '/marcas'
@@ -139,6 +150,7 @@ export interface FileRouteTypes {
     | '/accesorios'
     | '/audifonos'
     | '/blog'
+    | '/catalogo'
     | '/contacto'
     | '/faq'
     | '/marcas'
@@ -152,6 +164,7 @@ export interface RootRouteChildren {
   AccesoriosRoute: typeof AccesoriosRoute
   AudifonosRoute: typeof AudifonosRoute
   BlogRoute: typeof BlogRoute
+  CatalogoRoute: typeof CatalogoRoute
   ContactoRoute: typeof ContactoRoute
   FaqRoute: typeof FaqRoute
   MarcasRoute: typeof MarcasRoute
@@ -204,6 +217,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/catalogo': {
+      id: '/catalogo'
+      path: '/catalogo'
+      fullPath: '/catalogo'
+      preLoaderRoute: typeof CatalogoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog': {
       id: '/blog'
       path: '/blog'
@@ -240,6 +260,7 @@ const rootRouteChildren: RootRouteChildren = {
   AccesoriosRoute: AccesoriosRoute,
   AudifonosRoute: AudifonosRoute,
   BlogRoute: BlogRoute,
+  CatalogoRoute: CatalogoRoute,
   ContactoRoute: ContactoRoute,
   FaqRoute: FaqRoute,
   MarcasRoute: MarcasRoute,
