@@ -8,9 +8,8 @@ export function Footer() {
     <footer className="mt-24 bg-foreground text-background">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 grid gap-12 md:grid-cols-4">
         <div className="md:col-span-2">
-          <div className="inline-block rounded-2xl bg-background/95 p-3">
-            <Logo size={56} />
-          </div>
+          <Logo size={56} variant="mono" />
+
           <p className="mt-5 max-w-md text-background/70 leading-relaxed">
             Centro audiológico especializado en evaluación, adaptación y seguimiento
             con audífonos Oticon y Unitron. Tecnología de vanguardia con atención humana.
