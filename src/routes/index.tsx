@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Section } from "@/components/site/Section";
 import { Card, CardContent } from "@/components/ui/card";
 import { Ear, Stethoscope, HeadphonesIcon, Wrench, Star, ShieldCheck, Sparkles, ArrowRight, MessageCircle, Phone } from "lucide-react";
-import { AIDS } from "@/lib/aids";
+
 import { SITE } from "@/lib/site";
 
 export const Route = createFileRoute("/")({
@@ -129,27 +129,16 @@ function Home() {
         </div>
       </Section>
 
-      {/* FEATURED AIDS */}
-      <Section eyebrow="Audífonos destacados" title="Modelos modernos Oticon y Unitron">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {AIDS.slice(0, 6).map((a) => (
-            <Card key={a.slug} className="hover-lift overflow-hidden group">
-              <div className="aspect-square bg-secondary/50 overflow-hidden">
-                <img src={a.image} alt={`${a.brand} ${a.name}`} width={1024} height={1024} loading="lazy" className="size-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              </div>
-              <CardContent className="p-6">
-                <span className="text-xs uppercase tracking-widest text-gold font-semibold">{a.brand}</span>
-                <h3 className="font-display text-2xl mt-1">{a.name}</h3>
-                <p className="text-sm text-muted-foreground mt-2">{a.tagline}</p>
-                <Link to="/audifonos" className="inline-flex items-center gap-1 mt-4 text-primary text-sm font-medium hover:underline">
-                  Ver detalles <ArrowRight className="size-3" />
-                </Link>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+      {/* CATALOG CTA */}
+      <Section eyebrow="Catálogo" title="Modelos modernos Oticon y Unitron" center>
+        <p className="max-w-2xl mx-auto text-muted-foreground">
+          Explora nuestra selección completa de audífonos con tecnología de última generación,
+          desde soluciones invisibles hasta modelos súper potentes.
+        </p>
         <div className="mt-10 text-center">
-          <Button asChild size="lg" variant="outline"><Link to="/audifonos">Ver todos los modelos</Link></Button>
+          <Button asChild size="lg" className="bg-gradient-primary text-primary-foreground">
+            <Link to="/catalogo">Ver catálogo completo <ArrowRight className="ml-1 size-4" /></Link>
+          </Button>
         </div>
       </Section>
 
