@@ -140,8 +140,6 @@
   }
   .shadow-soft { box-shadow: var(--shadow-soft); }
   .shadow-card { box-shadow: var(--shadow-card); }
-  /* Removes the white background of the raster logo so it blends with light surfaces */
-  .logo-blend { mix-blend-mode: multiply; }
 }
 
 @keyframes float-y {
