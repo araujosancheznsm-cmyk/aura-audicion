@@ -43,9 +43,6 @@ export function Header() {
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
-          <Button asChild variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-            <Link to="/admin/catalogo"><Lock className="size-4 mr-1" /> Admin</Link>
-          </Button>
           <Button asChild className="bg-gradient-primary text-primary-foreground hover:opacity-90">
             <Link to="/contacto">Agenda tu evaluación</Link>
           </Button>
