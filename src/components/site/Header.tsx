@@ -71,9 +71,6 @@ export function Header() {
                 {n.label}
               </Link>
             ))}
-            <Button asChild variant="ghost" className="w-full justify-start text-muted-foreground hover:text-foreground">
-              <Link to="/admin/catalogo" onClick={() => setOpen(false)}><Lock className="size-4 mr-2" /> Panel admin</Link>
-            </Button>
             <Button asChild className="w-full bg-gradient-primary text-primary-foreground mt-2">
               <Link to="/contacto" onClick={() => setOpen(false)}>Agenda tu evaluación</Link>
             </Button>
