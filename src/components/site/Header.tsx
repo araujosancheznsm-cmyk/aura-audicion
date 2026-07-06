@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Lock } from "lucide-react";
 import { Logo } from "./Logo";
 import { NAV } from "@/lib/site";
 import { Button } from "@/components/ui/button";
@@ -43,6 +43,9 @@ export function Header() {
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
+          <Button asChild variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+            <Link to="/admin/catalogo"><Lock className="size-4 mr-1" /> Admin</Link>
+          </Button>
           <Button asChild className="bg-gradient-primary text-primary-foreground hover:opacity-90">
             <Link to="/contacto">Agenda tu evaluación</Link>
           </Button>
@@ -71,6 +74,9 @@ export function Header() {
                 {n.label}
               </Link>
             ))}
+            <Button asChild variant="ghost" className="w-full justify-start text-muted-foreground hover:text-foreground">
+              <Link to="/admin/catalogo" onClick={() => setOpen(false)}><Lock className="size-4 mr-2" /> Panel admin</Link>
+            </Button>
             <Button asChild className="w-full bg-gradient-primary text-primary-foreground mt-2">
               <Link to="/contacto" onClick={() => setOpen(false)}>Agenda tu evaluación</Link>
             </Button>
