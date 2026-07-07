@@ -1,8 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { normalizeAid, type HearingAid } from "@/lib/hearing-aids";
+import { createHearingAid, getAdminHearingAids, toggleHearingAidActive } from "@/lib/admin-catalog.functions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -15,24 +17,27 @@ export const Route = createFileRoute("/_authenticated/admin/catalogo/")({
   component: AdminList,
 });
 
-async function fetchAll(): Promise<HearingAid[]> {
-  const { data, error } = await supabase.from("hearing_aids").select("*").order("sort_order");
-  if (error) throw error;
-  return (data ?? []).map(normalizeAid);
-}
-
 function AdminList() {
   const navigate = useNavigate();
   const qc = useQueryClient();
-  const { data, isLoading } = useQuery({ queryKey: ["admin-catalog"], queryFn: fetchAll });
+  const fetchAll = useServerFn(getAdminHearingAids);
+  const createAid = useServerFn(createHearingAid);
+  const toggleAid = useServerFn(toggleHearingAidActive);
+  const { data, isLoading } = useQuery({
+    queryKey: ["admin-catalog"],
+    queryFn: async () => (await fetchAll()).map(normalizeAid),
+  });
   const [q, setQ] = useState("");
 
   const filtered = (data ?? []).filter((a) => `${a.brand} ${a.model}`.toLowerCase().includes(q.toLowerCase()));
 
   async function toggleActive(a: HearingAid) {
-    const { error } = await supabase.from("hearing_aids").update({ active: !a.active }).eq("id", a.id);
-    if (error) alert(error.message);
-    qc.invalidateQueries({ queryKey: ["admin-catalog"] });
+    try {
+      await toggleAid({ data: { id: a.id, active: !a.active } });
+      qc.invalidateQueries({ queryKey: ["admin-catalog"] });
+    } catch (error: any) {
+      alert(error.message ?? "No se pudo cambiar el estado.");
+    }
   }
 
   async function createNew() {
@@ -41,13 +46,12 @@ function AdminList() {
     const brand = prompt("Marca (Oticon / Unitron)") ?? "Oticon";
     const model = prompt("Modelo") ?? "Nuevo";
     const type = prompt("Tipo (BTE / CIC / ITC / etc)") ?? "BTE";
-    const { data, error } = await supabase
-      .from("hearing_aids")
-      .insert({ slug, brand, model, type, sort_order: (filtered.length + 1) * 10 })
-      .select()
-      .single();
-    if (error) return alert(error.message);
-    navigate({ to: "/admin/catalogo/$id", params: { id: data.id } });
+    try {
+      const data = await createAid({ data: { slug, brand, model, type, sort_order: (filtered.length + 1) * 10 } });
+      navigate({ to: "/admin/catalogo/$id", params: { id: data.id } });
+    } catch (error: any) {
+      alert(error.message ?? "No se pudo crear el modelo.");
+    }
   }
 
   async function signOut() {

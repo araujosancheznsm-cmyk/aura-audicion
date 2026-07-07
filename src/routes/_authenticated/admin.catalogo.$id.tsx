@@ -1,8 +1,15 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { normalizeAid, type HearingAid } from "@/lib/hearing-aids";
+import {
+  deleteHearingAid,
+  getAdminHearingAid,
+  removeHearingAidImage,
+  saveHearingAid,
+  uploadHearingAidImage,
+} from "@/lib/admin-catalog.functions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,34 +23,31 @@ export const Route = createFileRoute("/_authenticated/admin/catalogo/$id")({
   component: EditPage,
 });
 
-async function fetchAid(id: string): Promise<HearingAid | null> {
-  const { data, error } = await supabase.from("hearing_aids").select("*").eq("id", id).maybeSingle();
-  if (error) throw error;
-  return data ? normalizeAid(data) : null;
-}
-
-async function uploadImage(id: string, file: File): Promise<string> {
-  const ext = file.name.split(".").pop() || "jpg";
-  const path = `${id}/${Date.now()}.${ext}`;
-  const { error } = await supabase.storage.from("hearing-aids").upload(path, file, { upsert: true });
-  if (error) throw error;
-  const { data, error: sErr } = await supabase.storage.from("hearing-aids").createSignedUrl(path, 60 * 60 * 24 * 365 * 10);
-  if (sErr) throw sErr;
-  return data.signedUrl;
-}
-
 function EditPage() {
   const { id } = Route.useParams();
   const navigate = useNavigate();
   const qc = useQueryClient();
-  const { data, isLoading } = useQuery({ queryKey: ["admin-aid", id], queryFn: () => fetchAid(id) });
+  const fetchAid = useServerFn(getAdminHearingAid);
+  const saveAid = useServerFn(saveHearingAid);
+  const deleteAid = useServerFn(deleteHearingAid);
+  const uploadAidImage = useServerFn(uploadHearingAidImage);
+  const removeAidImage = useServerFn(removeHearingAidImage);
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["admin-aid", id],
+    queryFn: async () => {
+      const aid = await fetchAid({ data: { id } });
+      return aid ? normalizeAid(aid) : null;
+    },
+  });
   const [form, setForm] = useState<HearingAid | null>(null);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
 
   useEffect(() => { if (data) setForm(data); }, [data]);
 
-  if (isLoading || !form) return <div className="pt-32 text-center text-muted-foreground">Cargando…</div>;
+  if (isLoading) return <div className="pt-32 text-center text-muted-foreground">Cargando…</div>;
+  if (error) return <div className="pt-32 text-center text-destructive">{error.message}</div>;
+  if (!form) return <div className="pt-32 text-center text-muted-foreground">No se encontró este producto.</div>;
 
   function set<K extends keyof HearingAid>(k: K, v: HearingAid[K]) {
     setForm((f) => (f ? { ...f, [k]: v } : f));
@@ -52,19 +56,63 @@ function EditPage() {
   async function save() {
     if (!form) return;
     setSaving(true);
-    const { id: _, ...update } = form;
-    const { error } = await supabase.from("hearing_aids").update(update).eq("id", id);
-    setSaving(false);
-    if (error) return alert(error.message);
-    qc.invalidateQueries();
-    alert("Guardado");
+    try {
+      const updated = await saveAid({
+        data: {
+          id,
+          values: {
+            slug: form.slug,
+            brand: form.brand,
+            model: form.model,
+            type: form.type,
+            technology: form.technology,
+            hearing_loss_level: form.hearing_loss_level,
+            short_description: form.short_description,
+            full_description: form.full_description,
+            bluetooth: form.bluetooth,
+            rechargeable: form.rechargeable,
+            color: form.color,
+            warranty: form.warranty,
+            main_image_url: form.main_image_url,
+            gallery: form.gallery,
+            compatible_accessories: form.compatible_accessories,
+            features: form.features,
+            technologies: form.technologies,
+            benefits: form.benefits,
+            faqs: form.faqs,
+            active: form.active,
+            sort_order: form.sort_order,
+          },
+        },
+      });
+      setForm(normalizeAid(updated));
+      qc.invalidateQueries();
+      alert("Guardado");
+    } catch (error: any) {
+      alert(error.message ?? "No se pudo guardar.");
+    } finally {
+      setSaving(false);
+    }
   }
 
   async function del() {
     if (!confirm("¿Eliminar definitivamente?")) return;
-    const { error } = await supabase.from("hearing_aids").delete().eq("id", id);
-    if (error) return alert(error.message);
-    navigate({ to: "/admin/catalogo" });
+    try {
+      await deleteAid({ data: { id } });
+      qc.invalidateQueries({ queryKey: ["admin-catalog"] });
+      navigate({ to: "/admin/catalogo" });
+    } catch (error: any) {
+      alert(error.message ?? "No se pudo eliminar.");
+    }
+  }
+
+  function fileToBase64(file: File) {
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result).split(",")[1] ?? "");
+      reader.onerror = () => reject(new Error("No se pudo leer la imagen."));
+      reader.readAsDataURL(file);
+    });
   }
 
   async function onMainUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -72,9 +120,11 @@ function EditPage() {
     if (!f || !form) return;
     setUploading(true);
     try {
-      const url = await uploadImage(id, f);
-      set("main_image_url", url);
-    } catch (err: any) { alert(err.message); }
+      const base64 = await fileToBase64(f);
+      const updated = await uploadAidImage({ data: { id, filename: f.name, contentType: f.type || "image/png", base64, placement: "main" } });
+      setForm(normalizeAid(updated));
+      qc.invalidateQueries();
+    } catch (err: any) { alert(err.message ?? "No se pudo subir la imagen."); }
     finally { setUploading(false); }
   }
 
@@ -83,10 +133,26 @@ function EditPage() {
     if (!files.length || !form) return;
     setUploading(true);
     try {
-      const urls = await Promise.all(files.map((f) => uploadImage(id, f)));
-      set("gallery", [...form.gallery, ...urls]);
-    } catch (err: any) { alert(err.message); }
+      let latest: HearingAid | null = form;
+      for (const f of files) {
+        const base64 = await fileToBase64(f);
+        const updated = await uploadAidImage({ data: { id, filename: f.name, contentType: f.type || "image/png", base64, placement: "gallery" } });
+        latest = normalizeAid(updated);
+      }
+      setForm(latest);
+      qc.invalidateQueries();
+    } catch (err: any) { alert(err.message ?? "No se pudieron subir las imágenes."); }
     finally { setUploading(false); }
+  }
+
+  async function removeImage(placement: "main" | "gallery", url?: string) {
+    try {
+      const updated = await removeAidImage({ data: { id, placement, url } });
+      setForm(normalizeAid(updated));
+      qc.invalidateQueries();
+    } catch (err: any) {
+      alert(err.message ?? "No se pudo quitar la imagen.");
+    }
   }
 
   const listInput = (label: string, key: "features" | "technologies" | "benefits" | "compatible_accessories") => (
@@ -156,6 +222,11 @@ function EditPage() {
               ? <img src={form.main_image_url} className="size-full object-contain p-4" alt="" />
               : <ImageIcon className="size-10 text-muted-foreground/60" />}
           </div>
+          {form.main_image_url && (
+            <div className="text-center">
+              <Button size="sm" variant="outline" onClick={() => removeImage("main")}>Quitar imagen principal</Button>
+            </div>
+          )}
         </CardContent></Card>
 
         <Card><CardContent className="p-6 space-y-4">
@@ -171,8 +242,9 @@ function EditPage() {
               <div key={i} className="relative aspect-square rounded-xl bg-secondary/50 overflow-hidden group">
                 <img src={src} className="size-full object-contain p-2" alt="" />
                 <button
-                  onClick={() => set("gallery", form.gallery.filter((_, j) => j !== i))}
-                  className="absolute top-1 right-1 size-6 rounded-full bg-black/60 text-white opacity-0 group-hover:opacity-100 flex items-center justify-center"
+                  onClick={() => removeImage("gallery", src)}
+                  className="absolute top-1 right-1 size-6 rounded-full bg-background/90 text-foreground opacity-0 group-hover:opacity-100 flex items-center justify-center shadow-soft"
+                  aria-label="Quitar imagen"
                 ><X className="size-3.5" /></button>
               </div>
             ))}
