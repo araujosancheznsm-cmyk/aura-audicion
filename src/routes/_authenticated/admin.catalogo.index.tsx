@@ -5,6 +5,7 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { normalizeAid, type HearingAid } from "@/lib/hearing-aids";
 import { createHearingAid, getAdminHearingAids, toggleHearingAidActive } from "@/lib/admin-catalog.functions";
+import { HearingAidEditor } from "@/components/admin/HearingAidEditor";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -28,6 +29,7 @@ function AdminList() {
     queryFn: async () => (await fetchAll()).map(normalizeAid),
   });
   const [q, setQ] = useState("");
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   const filtered = (data ?? []).filter((a) => `${a.brand} ${a.model}`.toLowerCase().includes(q.toLowerCase()));
 
@@ -48,7 +50,8 @@ function AdminList() {
     const type = prompt("Tipo (BTE / CIC / ITC / etc)") ?? "BTE";
     try {
       const data = await createAid({ data: { slug, brand, model, type, sort_order: (filtered.length + 1) * 10 } });
-      navigate({ to: "/admin/catalogo/$id", params: { id: data.id } });
+      qc.invalidateQueries({ queryKey: ["admin-catalog"] });
+      setEditingId(data.id);
     } catch (error: any) {
       alert(error.message ?? "No se pudo crear el modelo.");
     }
@@ -78,40 +81,51 @@ function AdminList() {
       </header>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
-        <div className="flex flex-wrap items-center gap-3 mb-8">
-          <div className="relative flex-1 min-w-[220px]">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-            <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Buscar…" className="pl-9 h-11 rounded-full" />
-          </div>
-          <Button onClick={createNew} className="rounded-full bg-gradient-primary text-primary-foreground">
-            <Plus className="mr-1 size-4" /> Nuevo modelo
-          </Button>
-        </div>
-
-        {isLoading ? (
-          <div className="text-center text-muted-foreground py-16">Cargando…</div>
+        {editingId ? (
+          <HearingAidEditor
+            aidId={editingId}
+            onBack={() => setEditingId(null)}
+            onDeleted={() => setEditingId(null)}
+          />
         ) : (
-          <div className="grid gap-3">
-            {filtered.map((a) => (
-              <Card key={a.id} className="flex items-center gap-4 p-4 rounded-2xl border-border/60 hover:shadow-soft transition-shadow">
-                <div className="size-16 rounded-xl bg-secondary/50 flex items-center justify-center overflow-hidden shrink-0">
-                  {a.main_image_url
-                    ? <img src={a.main_image_url} className="size-full object-contain p-1" alt="" />
-                    : <ImageIcon className="size-6 text-muted-foreground/60" />}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-xs uppercase tracking-widest text-gold font-semibold">{a.brand}</div>
-                  <div className="font-medium truncate">{a.model}</div>
-                  <div className="text-xs text-muted-foreground">{a.type} · orden {a.sort_order}</div>
-                </div>
-                <div className="flex items-center gap-2">
-                  {a.active ? <Badge>Activo</Badge> : <Badge variant="outline">Oculto</Badge>}
-                  <Button size="sm" variant="ghost" onClick={() => toggleActive(a)}>{a.active ? "Ocultar" : "Activar"}</Button>
-                  <Button size="sm" asChild><Link to="/admin/catalogo/$id" params={{ id: a.id }}><Pencil className="size-3.5 mr-1" /> Editar</Link></Button>
-                </div>
-              </Card>
-            ))}
-          </div>
+          <>
+            <div className="flex flex-wrap items-center gap-3 mb-8">
+              <div className="relative flex-1 min-w-[220px]">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Buscar…" className="pl-9 h-11 rounded-full" />
+              </div>
+              <Button onClick={createNew} className="rounded-full bg-gradient-primary text-primary-foreground">
+                <Plus className="mr-1 size-4" /> Nuevo modelo
+              </Button>
+            </div>
+
+            {isLoading ? (
+              <div className="text-center text-muted-foreground py-16">Cargando…</div>
+            ) : (
+              <div className="grid gap-3">
+                {filtered.map((a) => (
+                  <Card key={a.id} className="flex items-center gap-4 p-4 rounded-2xl border-border/60 hover:shadow-soft transition-shadow">
+                    <div className="size-16 rounded-xl bg-secondary/50 flex items-center justify-center overflow-hidden shrink-0">
+                      {a.main_image_url
+                        ? <img src={a.main_image_url} className="size-full object-contain p-1" alt={`Imagen de ${a.brand} ${a.model}`} />
+                        : <ImageIcon className="size-6 text-muted-foreground/60" />}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs uppercase tracking-widest text-gold font-semibold">{a.brand}</div>
+                      <div className="font-medium truncate">{a.model}</div>
+                      <div className="text-xs text-muted-foreground">{a.type} · orden {a.sort_order}</div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {a.active ? <Badge>Activo</Badge> : <Badge variant="outline">Oculto</Badge>}
+                      <Button size="sm" variant="ghost" onClick={() => toggleActive(a)}>{a.active ? "Ocultar" : "Activar"}</Button>
+                      <Button size="sm" onClick={() => setEditingId(a.id)}><Pencil className="size-3.5 mr-1" /> Editar</Button>
+                    </div>
+                  </Card>
+                ))}
+                {filtered.length === 0 && <div className="text-center text-muted-foreground py-16">No hay modelos con ese filtro.</div>}
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
