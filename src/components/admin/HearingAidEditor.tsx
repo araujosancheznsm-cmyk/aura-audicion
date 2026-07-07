@@ -122,7 +122,7 @@ export function HearingAidEditor({
     try {
       const base64 = await fileToBase64(file);
       const updated = await uploadAidImage({
-        data: { aidId, id: aidId, filename: file.name, contentType: file.type || "image/png", base64, placement: "main" },
+        data: { id: aidId, filename: file.name, contentType: file.type || "image/png", base64, placement: "main" },
       });
       setForm(normalizeAid(updated));
       qc.invalidateQueries();
@@ -143,7 +143,7 @@ export function HearingAidEditor({
       for (const file of files) {
         const base64 = await fileToBase64(file);
         const updated = await uploadAidImage({
-          data: { aidId, id: aidId, filename: file.name, contentType: file.type || "image/png", base64, placement: "gallery" },
+          data: { id: aidId, filename: file.name, contentType: file.type || "image/png", base64, placement: "gallery" },
         });
         latest = normalizeAid(updated);
       }
