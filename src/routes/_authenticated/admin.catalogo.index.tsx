@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Plus, Search, LogOut, Pencil, Image as ImageIcon } from "lucide-react";
 import { Logo } from "@/components/site/Logo";
 
-export const Route = createFileRoute("/_authenticated/admin/catalogo")({
+export const Route = createFileRoute("/_authenticated/admin/catalogo/")({
   head: () => ({ meta: [{ title: "Admin · Catálogo" }, { name: "robots", content: "noindex" }] }),
   component: AdminList,
 });
