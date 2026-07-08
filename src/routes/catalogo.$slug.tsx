@@ -10,12 +10,23 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { SITE } from "@/lib/site";
 
 export const Route = createFileRoute("/catalogo/$slug")({
-  head: ({ params }) => ({
-    meta: [
-      { title: `${params.slug.replace(/-/g, " ").toUpperCase()} · Aura Audición` },
-      { name: "description", content: "Detalle del modelo, características técnicas y solicitud de evaluación." },
-    ],
-  }),
+  head: ({ params }) => {
+    const pretty = params.slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+    const title = `${pretty} · Audífono premium · Aura Audición`;
+    const description = `Conoce el audífono ${pretty}: características, tecnología, conectividad y garantía. Solicita tu evaluación gratuita en Aura Audición, Lima.`;
+    const url = `https://aura-audicion.lovable.app/catalogo/${params.slug}`;
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:type", content: "product" },
+        { property: "og:url", content: url },
+      ],
+      links: [{ rel: "canonical", href: url }],
+    };
+  },
   component: DetailPage,
   errorComponent: () => <ErrorState />,
   notFoundComponent: () => <ErrorState />,
