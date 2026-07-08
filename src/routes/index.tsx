@@ -63,7 +63,7 @@ function Home() {
           <div className="relative animate-fade-up">
             <div className="absolute -inset-4 bg-gradient-primary opacity-10 blur-2xl rounded-[3rem]" />
             <div className="relative rounded-[2.5rem] overflow-hidden shadow-card">
-              <img src={hero} alt="Paciente sonriendo con audífono moderno" width={1600} height={1200} className="w-full h-auto object-cover" />
+              <img src={hero} alt="Paciente sonriendo con audífono moderno" width={1600} height={1200} fetchPriority="high" decoding="async" className="w-full h-auto object-cover" />
             </div>
             <div className="absolute -bottom-6 -left-6 glass rounded-2xl p-4 shadow-soft hidden sm:block animate-float">
               <div className="flex items-center gap-3">
