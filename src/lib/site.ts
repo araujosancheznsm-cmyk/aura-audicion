@@ -12,6 +12,8 @@ export const SITE = {
     { d: "Domingos", h: "Cerrado" },
   ],
   email: "sedegeneralaura@gmail.com",
+  instagram: "https://www.instagram.com/auraaudicion/",
+  instagramHandle: "@auraaudicion",
 };
 
 export const NAV = [

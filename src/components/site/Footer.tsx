@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Phone, MapPin, Clock, Mail, MessageCircle } from "lucide-react";
+import { Phone, MapPin, Clock, Mail, MessageCircle, Instagram } from "lucide-react";
 import { Logo } from "./Logo";
 import { NAV, SITE } from "@/lib/site";
 
@@ -19,6 +19,7 @@ export function Footer() {
             <a href={SITE.whatsapp} target="_blank" rel="noopener" className="flex items-center gap-2 hover:text-gold"><MessageCircle className="size-4" /> WhatsApp</a>
             <span className="flex items-start gap-2"><MapPin className="size-4 mt-0.5" /> {SITE.address}</span>
             <a href={`mailto:${SITE.email}`} className="flex items-center gap-2 hover:text-gold"><Mail className="size-4" /> {SITE.email}</a>
+            <a href={SITE.instagram} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-gold"><Instagram className="size-4" /> {SITE.instagramHandle}</a>
           </div>
         </div>
 
