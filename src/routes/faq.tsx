@@ -17,11 +17,13 @@ const FAQS = [
 export const Route = createFileRoute("/faq")({
   head: () => ({
     meta: [
-      { title: "Preguntas frecuentes · Aura Audición" },
-      { name: "description", content: "Resolvemos las dudas más comunes sobre audífonos, audiometría, adaptación, garantías y reparaciones." },
+      { title: "Preguntas frecuentes sobre audífonos · Aura Audición" },
+      { name: "description", content: "Resolvemos dudas sobre audífonos, audiometría, adaptación, garantías, reparaciones, pruebas y financiamiento en Aura Audición, Lima." },
       { property: "og:title", content: "FAQ · Aura Audición" },
       { property: "og:description", content: "Preguntas frecuentes sobre nuestros servicios audiológicos." },
+      { property: "og:url", content: "https://aura-audicion.lovable.app/faq" },
     ],
+    links: [{ rel: "canonical", href: "https://aura-audicion.lovable.app/faq" }],
     scripts: [
       {
         type: "application/ld+json",

@@ -8,11 +8,13 @@ import { Brain, Network, Radar, Headphones, Focus, Zap, Radio } from "lucide-rea
 export const Route = createFileRoute("/marcas")({
   head: () => ({
     meta: [
-      { title: "Marcas Oticon y Unitron · Aura Audición" },
-      { name: "description", content: "Distribuidores oficiales de Oticon y Unitron en Lima. Tecnologías BrainHearing, DNN, MoreSound Intelligence, Vivante, HyperFocus y más." },
+      { title: "Marcas Oticon y Unitron · Aura Audición Lima" },
+      { name: "description", content: "Distribuidores oficiales de Oticon (Dinamarca) y Unitron (Canadá) en Lima. Tecnologías BrainHearing, DNN, MoreSound Intelligence, Vivante e HyperFocus." },
       { property: "og:title", content: "Marcas premium · Aura Audición" },
       { property: "og:description", content: "Oticon y Unitron con tecnología audiológica de vanguardia." },
+      { property: "og:url", content: "https://aura-audicion.lovable.app/marcas" },
     ],
+    links: [{ rel: "canonical", href: "https://aura-audicion.lovable.app/marcas" }],
   }),
   component: Marcas,
 });

@@ -21,11 +21,13 @@ const SERVICES = [
 export const Route = createFileRoute("/servicios")({
   head: () => ({
     meta: [
-      { title: "Servicios · Aura Audición" },
-      { name: "description", content: "Evaluación audiológica, audiometría, adaptación, programación, venta, accesorios, limpieza, reparación y mantenimiento de audífonos." },
+      { title: "Servicios audiológicos y adaptación de audífonos · Aura" },
+      { name: "description", content: "Evaluación audiológica, audiometría, adaptación, programación, venta, accesorios, limpieza y reparación de audífonos en Independencia, Lima." },
       { property: "og:title", content: "Servicios audiológicos · Aura Audición" },
       { property: "og:description", content: "Servicios completos para tu salud auditiva en Lima." },
+      { property: "og:url", content: "https://aura-audicion.lovable.app/servicios" },
     ],
+    links: [{ rel: "canonical", href: "https://aura-audicion.lovable.app/servicios" }],
   }),
   component: Servicios,
 });

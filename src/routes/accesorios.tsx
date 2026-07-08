@@ -19,11 +19,13 @@ const ITEMS = [
 export const Route = createFileRoute("/accesorios")({
   head: () => ({
     meta: [
-      { title: "Accesorios para audífonos · Aura Audición" },
-      { name: "description", content: "Cargadores, domos, filtros, moldes, kits de limpieza, TV Connector, micrófonos remotos y estuches para audífonos Oticon y Unitron." },
+      { title: "Accesorios para audífonos Oticon y Unitron · Aura" },
+      { name: "description", content: "Cargadores, domos, filtros, moldes a medida, kits de limpieza, TV Connector, micrófonos remotos y estuches para audífonos Oticon y Unitron." },
       { property: "og:title", content: "Accesorios para audífonos · Aura Audición" },
       { property: "og:description", content: "Todo lo que necesitas para sacar el máximo a tus audífonos." },
+      { property: "og:url", content: "https://aura-audicion.lovable.app/accesorios" },
     ],
+    links: [{ rel: "canonical", href: "https://aura-audicion.lovable.app/accesorios" }],
   }),
   component: Accesorios,
 });

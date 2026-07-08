@@ -45,11 +45,13 @@ const POSTS = [
 export const Route = createFileRoute("/blog")({
   head: () => ({
     meta: [
-      { title: "Blog de salud auditiva · Aura Audición" },
-      { name: "description", content: "Artículos sobre audífonos, audiometría, salud auditiva, tecnologías Oticon y Unitron, y consejos de mantenimiento." },
+      { title: "Blog de salud auditiva y audífonos · Aura Audición" },
+      { name: "description", content: "Artículos sobre pérdida auditiva, audiometría, tecnologías Oticon y Unitron, cuidado de audífonos y consejos de salud auditiva." },
       { property: "og:title", content: "Blog · Aura Audición" },
       { property: "og:description", content: "Consejos y tecnología en salud auditiva." },
+      { property: "og:url", content: "https://aura-audicion.lovable.app/blog" },
     ],
+    links: [{ rel: "canonical", href: "https://aura-audicion.lovable.app/blog" }],
   }),
   component: Blog,
 });

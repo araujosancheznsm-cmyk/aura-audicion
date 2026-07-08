@@ -1,2 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /auth
+Disallow: /admin
+
+Sitemap: https://aura-audicion.lovable.app/sitemap.xml
