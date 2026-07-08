@@ -12,7 +12,9 @@ export const Route = createFileRoute("/nosotros")({
       { name: "description", content: "Conoce a Aura Audición: un centro audiológico premium en Lima dedicado a la salud auditiva con tecnología Oticon y Unitron." },
       { property: "og:title", content: "Nosotros · Aura Audición" },
       { property: "og:description", content: "Centro audiológico con enfoque humano y tecnología premium." },
+      { property: "og:url", content: "https://aura-audicion.lovable.app/nosotros" },
     ],
+    links: [{ rel: "canonical", href: "https://aura-audicion.lovable.app/nosotros" }],
   }),
   component: Nosotros,
 });
