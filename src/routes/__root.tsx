@@ -81,23 +81,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Centro audiológico premium en Independencia, Lima. Evaluación, adaptación y venta de audífonos Oticon y Unitron. Agenda tu evaluación auditiva.",
+          "Centro audiológico premium en Independencia, Lima. Evaluación, adaptación y venta de audífonos Oticon y Unitron. Agenda tu evaluación auditiva gratuita.",
       },
       { name: "author", content: "Aura Audición" },
       { name: "theme-color", content: "#1d4d7a" },
-      { property: "og:title", content: "Aura Audición · Volver a escuchar la vida" },
-      {
-        property: "og:description",
-        content: "Centro audiológico premium con tecnología Oticon y Unitron en Lima.",
-      },
+      { property: "og:site_name", content: "Aura Audición" },
+      { property: "og:locale", content: "es_PE" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Aura Audición · Volver a escuchar la vida" },
-      { name: "description", content: "Aura Clarity Project is a premium website for Aura Audición, showcasing modern hearing aids and audiology services." },
-      { property: "og:description", content: "Aura Clarity Project is a premium website for Aura Audición, showcasing modern hearing aids and audiology services." },
-      { name: "twitter:description", content: "Aura Clarity Project is a premium website for Aura Audición, showcasing modern hearing aids and audiology services." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/fa3bd2ca-56fa-4232-885f-66703a876455/id-preview-11244b89--0306dbe8-0824-4418-9851-6c95096ccb83.lovable.app-1782853631521.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/fa3bd2ca-56fa-4232-885f-66703a876455/id-preview-11244b89--0306dbe8-0824-4418-9851-6c95096ccb83.lovable.app-1782853631521.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -109,6 +100,47 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap",
+      },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "MedicalBusiness",
+          "@id": "https://aura-audicion.lovable.app/#business",
+          name: "Aura Audición",
+          description:
+            "Centro audiológico premium en Lima especializado en evaluación, adaptación y venta de audífonos Oticon y Unitron.",
+          url: "https://aura-audicion.lovable.app",
+          telephone: "+51 922 400 040",
+          email: "sedegeneralaura@gmail.com",
+          image: "https://aura-audicion.lovable.app/favicon.png",
+          priceRange: "$$",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "Urb. Las Violetas Nº 626",
+            addressLocality: "Independencia",
+            addressRegion: "Lima",
+            addressCountry: "PE",
+          },
+          openingHoursSpecification: [
+            {
+              "@type": "OpeningHoursSpecification",
+              dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+              opens: "09:00",
+              closes: "18:30",
+            },
+            {
+              "@type": "OpeningHoursSpecification",
+              dayOfWeek: "Saturday",
+              opens: "09:00",
+              closes: "14:00",
+            },
+          ],
+          sameAs: ["https://www.instagram.com/auraaudicion/"],
+          medicalSpecialty: "Audiology",
+        }),
       },
     ],
   }),
