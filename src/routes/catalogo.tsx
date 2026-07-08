@@ -13,11 +13,13 @@ import { SITE } from "@/lib/site";
 export const Route = createFileRoute("/catalogo")({
   head: () => ({
     meta: [
-      { title: "Catálogo de Audífonos · Aura Audición" },
-      { name: "description", content: "Catálogo premium de audífonos Oticon y Unitron disponibles en Aura Audición: BTE, MiniRITE, MiniBTE, CIC e ITC hechos a medida." },
+      { title: "Catálogo de audífonos Oticon y Unitron · Aura Audición" },
+      { name: "description", content: "Catálogo premium de audífonos Oticon y Unitron: modelos BTE, MiniRITE, MiniBTE, CIC e ITC recargables, con Bluetooth y hechos a medida." },
       { property: "og:title", content: "Catálogo de Audífonos · Aura Audición" },
-      { property: "og:description", content: "Explora los audífonos que comercializamos: modelos recargables, con Bluetooth, súper potencia y a medida." },
+      { property: "og:description", content: "Explora audífonos recargables, con Bluetooth, súper potencia y a medida." },
+      { property: "og:url", content: "https://aura-audicion.lovable.app/catalogo" },
     ],
+    links: [{ rel: "canonical", href: "https://aura-audicion.lovable.app/catalogo" }],
   }),
   component: CatalogoPage,
 });
