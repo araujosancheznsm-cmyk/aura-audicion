@@ -12,10 +12,14 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Aura Audición · Centro audiológico premium en Lima" },
-      { name: "description", content: "Evaluación auditiva, audiometría y adaptación de audífonos Oticon y Unitron. Vuelve a escuchar la vida con Aura Audición en Independencia, Lima." },
+      { name: "description", content: "Evaluación auditiva gratuita, audiometría y adaptación de audífonos Oticon y Unitron. Vuelve a escuchar la vida con Aura Audición en Independencia, Lima." },
       { property: "og:title", content: "Aura Audición · Volver a escuchar la vida" },
-      { property: "og:description", content: "Centro audiológico premium con tecnología Oticon y Unitron." },
+      { property: "og:description", content: "Centro audiológico premium con tecnología Oticon y Unitron en Lima." },
+      { property: "og:url", content: "https://aura-audicion.lovable.app/" },
+      { name: "twitter:title", content: "Aura Audición · Volver a escuchar la vida" },
+      { name: "twitter:description", content: "Centro audiológico premium con tecnología Oticon y Unitron en Lima." },
     ],
+    links: [{ rel: "canonical", href: "https://aura-audicion.lovable.app/" }],
   }),
   component: Home,
 });
