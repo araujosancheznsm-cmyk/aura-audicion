@@ -30,7 +30,7 @@ async function fetchOne(slug: string): Promise<HearingAid | null> {
 async function fetchRelated(brand: string, excludeId: string): Promise<HearingAid[]> {
   const { data, error } = await supabase
     .from("hearing_aids")
-    .select("*")
+    .select("id,slug,brand,model,type,main_image_url")
     .eq("active", true)
     .eq("brand", brand)
     .neq("id", excludeId)

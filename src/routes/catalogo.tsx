@@ -25,10 +25,12 @@ export const Route = createFileRoute("/catalogo")({
 const BRANDS = ["Todas", "Oticon", "Unitron"] as const;
 const TYPES = ["Todos", "BTE", "MiniRITE", "MiniBTE", "CIC", "ITC"] as const;
 
+const CARD_COLS = "id,slug,brand,model,type,short_description,bluetooth,rechargeable,main_image_url,sort_order,active";
+
 async function fetchCatalog(): Promise<HearingAid[]> {
   const { data, error } = await supabase
     .from("hearing_aids")
-    .select("*")
+    .select(CARD_COLS)
     .eq("active", true)
     .order("sort_order", { ascending: true });
   if (error) throw error;
