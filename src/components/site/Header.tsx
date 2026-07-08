@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Instagram } from "lucide-react";
 import { Logo } from "./Logo";
-import { NAV } from "@/lib/site";
+import { NAV, SITE } from "@/lib/site";
 import { Button } from "@/components/ui/button";
 
 export function Header() {
@@ -50,7 +50,16 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-2">
+          <a
+            href={SITE.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram Aura Audición"
+            className="p-2 rounded-full text-foreground/70 hover:text-primary hover:bg-secondary transition-colors"
+          >
+            <Instagram className="size-5" />
+          </a>
           <Button asChild className="bg-gradient-primary text-primary-foreground hover:opacity-90">
             <Link to="/contacto">Agenda tu evaluación</Link>
           </Button>
