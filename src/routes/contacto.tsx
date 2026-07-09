@@ -24,7 +24,7 @@ export const Route = createFileRoute("/contacto")({
   head: () => ({
     meta: [
       { title: "Contacto y evaluación auditiva gratuita · Aura Audición" },
-      { name: "description", content: "Agenda tu evaluación auditiva en Aura Audición, Urb. Las Violetas 626, Independencia, Lima. Llámanos al +51 922 400 040 o escríbenos por WhatsApp." },
+      { name: "description", content: "Agenda tu evaluación auditiva en Aura Audición, Las Violetas 626, Independencia, Lima. Llámanos al +51 922 400 040 o escríbenos por WhatsApp." },
       { property: "og:title", content: "Contacto · Aura Audición" },
       { property: "og:description", content: "Agenda tu evaluación auditiva gratuita en Independencia, Lima." },
       { property: "og:url", content: "https://aura-audicion.lovable.app/contacto" },
