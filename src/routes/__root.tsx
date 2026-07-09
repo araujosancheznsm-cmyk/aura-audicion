@@ -119,7 +119,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           priceRange: "$$",
           address: {
             "@type": "PostalAddress",
-            streetAddress: "Urb. Las Violetas Nº 626",
+            streetAddress: "Las Violetas Nº 626",
             addressLocality: "Independencia",
             addressRegion: "Lima",
             addressCountry: "PE",
