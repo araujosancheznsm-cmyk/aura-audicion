@@ -15,12 +15,12 @@ import { Route as NosotrosRouteImport } from './routes/nosotros'
 import { Route as MarcasRouteImport } from './routes/marcas'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactoRouteImport } from './routes/contacto'
-import { Route as CatalogoRouteImport } from './routes/catalogo'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AccesoriosRouteImport } from './routes/accesorios'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CatalogoIndexRouteImport } from './routes/catalogo.index'
 import { Route as CatalogoSlugRouteImport } from './routes/catalogo.$slug'
 import { Route as AuthenticatedAdminCatalogoIndexRouteImport } from './routes/_authenticated/admin.catalogo.index'
 import { Route as AuthenticatedAdminCatalogoIdRouteImport } from './routes/_authenticated/admin.catalogo.$id'
@@ -55,11 +55,6 @@ const ContactoRoute = ContactoRouteImport.update({
   path: '/contacto',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CatalogoRoute = CatalogoRouteImport.update({
-  id: '/catalogo',
-  path: '/catalogo',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const BlogRoute = BlogRouteImport.update({
   id: '/blog',
   path: '/blog',
@@ -84,10 +79,15 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CatalogoIndexRoute = CatalogoIndexRouteImport.update({
+  id: '/catalogo/',
+  path: '/catalogo/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CatalogoSlugRoute = CatalogoSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => CatalogoRoute,
+  id: '/catalogo/$slug',
+  path: '/catalogo/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminCatalogoIndexRoute =
   AuthenticatedAdminCatalogoIndexRouteImport.update({
@@ -107,7 +107,6 @@ export interface FileRoutesByFullPath {
   '/accesorios': typeof AccesoriosRoute
   '/auth': typeof AuthRoute
   '/blog': typeof BlogRoute
-  '/catalogo': typeof CatalogoRouteWithChildren
   '/contacto': typeof ContactoRoute
   '/faq': typeof FaqRoute
   '/marcas': typeof MarcasRoute
@@ -115,6 +114,7 @@ export interface FileRoutesByFullPath {
   '/servicios': typeof ServiciosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/catalogo/$slug': typeof CatalogoSlugRoute
+  '/catalogo/': typeof CatalogoIndexRoute
   '/admin/catalogo/$id': typeof AuthenticatedAdminCatalogoIdRoute
   '/admin/catalogo/': typeof AuthenticatedAdminCatalogoIndexRoute
 }
@@ -123,7 +123,6 @@ export interface FileRoutesByTo {
   '/accesorios': typeof AccesoriosRoute
   '/auth': typeof AuthRoute
   '/blog': typeof BlogRoute
-  '/catalogo': typeof CatalogoRouteWithChildren
   '/contacto': typeof ContactoRoute
   '/faq': typeof FaqRoute
   '/marcas': typeof MarcasRoute
@@ -131,6 +130,7 @@ export interface FileRoutesByTo {
   '/servicios': typeof ServiciosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/catalogo/$slug': typeof CatalogoSlugRoute
+  '/catalogo': typeof CatalogoIndexRoute
   '/admin/catalogo/$id': typeof AuthenticatedAdminCatalogoIdRoute
   '/admin/catalogo': typeof AuthenticatedAdminCatalogoIndexRoute
 }
@@ -141,7 +141,6 @@ export interface FileRoutesById {
   '/accesorios': typeof AccesoriosRoute
   '/auth': typeof AuthRoute
   '/blog': typeof BlogRoute
-  '/catalogo': typeof CatalogoRouteWithChildren
   '/contacto': typeof ContactoRoute
   '/faq': typeof FaqRoute
   '/marcas': typeof MarcasRoute
@@ -149,6 +148,7 @@ export interface FileRoutesById {
   '/servicios': typeof ServiciosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/catalogo/$slug': typeof CatalogoSlugRoute
+  '/catalogo/': typeof CatalogoIndexRoute
   '/_authenticated/admin/catalogo/$id': typeof AuthenticatedAdminCatalogoIdRoute
   '/_authenticated/admin/catalogo/': typeof AuthenticatedAdminCatalogoIndexRoute
 }
@@ -159,7 +159,6 @@ export interface FileRouteTypes {
     | '/accesorios'
     | '/auth'
     | '/blog'
-    | '/catalogo'
     | '/contacto'
     | '/faq'
     | '/marcas'
@@ -167,6 +166,7 @@ export interface FileRouteTypes {
     | '/servicios'
     | '/sitemap.xml'
     | '/catalogo/$slug'
+    | '/catalogo/'
     | '/admin/catalogo/$id'
     | '/admin/catalogo/'
   fileRoutesByTo: FileRoutesByTo
@@ -175,7 +175,6 @@ export interface FileRouteTypes {
     | '/accesorios'
     | '/auth'
     | '/blog'
-    | '/catalogo'
     | '/contacto'
     | '/faq'
     | '/marcas'
@@ -183,6 +182,7 @@ export interface FileRouteTypes {
     | '/servicios'
     | '/sitemap.xml'
     | '/catalogo/$slug'
+    | '/catalogo'
     | '/admin/catalogo/$id'
     | '/admin/catalogo'
   id:
@@ -192,7 +192,6 @@ export interface FileRouteTypes {
     | '/accesorios'
     | '/auth'
     | '/blog'
-    | '/catalogo'
     | '/contacto'
     | '/faq'
     | '/marcas'
@@ -200,6 +199,7 @@ export interface FileRouteTypes {
     | '/servicios'
     | '/sitemap.xml'
     | '/catalogo/$slug'
+    | '/catalogo/'
     | '/_authenticated/admin/catalogo/$id'
     | '/_authenticated/admin/catalogo/'
   fileRoutesById: FileRoutesById
@@ -210,13 +210,14 @@ export interface RootRouteChildren {
   AccesoriosRoute: typeof AccesoriosRoute
   AuthRoute: typeof AuthRoute
   BlogRoute: typeof BlogRoute
-  CatalogoRoute: typeof CatalogoRouteWithChildren
   ContactoRoute: typeof ContactoRoute
   FaqRoute: typeof FaqRoute
   MarcasRoute: typeof MarcasRoute
   NosotrosRoute: typeof NosotrosRoute
   ServiciosRoute: typeof ServiciosRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  CatalogoSlugRoute: typeof CatalogoSlugRoute
+  CatalogoIndexRoute: typeof CatalogoIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -263,13 +264,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/catalogo': {
-      id: '/catalogo'
-      path: '/catalogo'
-      fullPath: '/catalogo'
-      preLoaderRoute: typeof CatalogoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/blog': {
       id: '/blog'
       path: '/blog'
@@ -305,12 +299,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/catalogo/': {
+      id: '/catalogo/'
+      path: '/catalogo'
+      fullPath: '/catalogo/'
+      preLoaderRoute: typeof CatalogoIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/catalogo/$slug': {
       id: '/catalogo/$slug'
-      path: '/$slug'
+      path: '/catalogo/$slug'
       fullPath: '/catalogo/$slug'
       preLoaderRoute: typeof CatalogoSlugRouteImport
-      parentRoute: typeof CatalogoRoute
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin/catalogo/': {
       id: '/_authenticated/admin/catalogo/'
@@ -342,42 +343,21 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
-interface CatalogoRouteChildren {
-  CatalogoSlugRoute: typeof CatalogoSlugRoute
-}
-
-const CatalogoRouteChildren: CatalogoRouteChildren = {
-  CatalogoSlugRoute: CatalogoSlugRoute,
-}
-
-const CatalogoRouteWithChildren = CatalogoRoute._addFileChildren(
-  CatalogoRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AccesoriosRoute: AccesoriosRoute,
   AuthRoute: AuthRoute,
   BlogRoute: BlogRoute,
-  CatalogoRoute: CatalogoRouteWithChildren,
   ContactoRoute: ContactoRoute,
   FaqRoute: FaqRoute,
   MarcasRoute: MarcasRoute,
   NosotrosRoute: NosotrosRoute,
   ServiciosRoute: ServiciosRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  CatalogoSlugRoute: CatalogoSlugRoute,
+  CatalogoIndexRoute: CatalogoIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { SITE } from "@/lib/site";
 
-export const Route = createFileRoute("/catalogo")({
+export const Route = createFileRoute("/catalogo/")({
   head: () => ({
     meta: [
       { title: "Catálogo de audífonos Oticon y Unitron · Aura Audición" },
