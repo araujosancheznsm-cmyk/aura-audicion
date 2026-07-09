@@ -22,7 +22,7 @@ import {
 import { SITE } from "@/lib/site";
 import { supabase } from "@/integrations/supabase/client";
 import { normalizeAid, type HearingAid } from "@/lib/hearing-aids";
-import { ProductImagePlaceholder } from "@/components/site/ProductImagePlaceholder";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
