@@ -1,10 +1,24 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft, ArrowRight, Bluetooth, BatteryCharging, ShieldCheck, MessageCircle, Calendar } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Bluetooth,
+  BatteryCharging,
+  ShieldCheck,
+  MessageCircle,
+  Calendar,
+  Expand,
+  Sparkles,
+  CheckCircle2,
+  Layers,
+  Ear,
+} from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { normalizeAid, type HearingAid } from "@/lib/hearing-aids";
 import { ProductImagePlaceholder } from "@/components/site/ProductImagePlaceholder";
+import { Lightbox } from "@/components/site/Lightbox";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { SITE } from "@/lib/site";
@@ -45,7 +59,7 @@ async function fetchRelated(brand: string, excludeId: string): Promise<HearingAi
     .eq("active", true)
     .eq("brand", brand)
     .neq("id", excludeId)
-    .limit(3);
+    .limit(4);
   if (error) throw error;
   return (data ?? []).map(normalizeAid);
 }
@@ -59,61 +73,130 @@ function DetailPage() {
     enabled: !!aid,
   });
   const [imgIdx, setImgIdx] = useState(0);
+  const [lightbox, setLightbox] = useState<number | null>(null);
 
-  if (isLoading) return <div className="pt-40 text-center text-muted-foreground">Cargando…</div>;
+  if (isLoading) {
+    return (
+      <div className="pt-40 pb-24">
+        <div className="mx-auto max-w-7xl px-6 grid lg:grid-cols-2 gap-12">
+          <div className="aspect-square rounded-3xl bg-secondary/60 animate-pulse" />
+          <div className="space-y-4">
+            <div className="h-4 w-24 bg-secondary/60 rounded animate-pulse" />
+            <div className="h-12 w-3/4 bg-secondary/60 rounded animate-pulse" />
+            <div className="h-4 w-full bg-secondary/60 rounded animate-pulse" />
+            <div className="h-4 w-5/6 bg-secondary/60 rounded animate-pulse" />
+          </div>
+        </div>
+      </div>
+    );
+  }
   if (!aid) throw notFound();
 
   const images = [aid.main_image_url, ...aid.gallery].filter(Boolean) as string[];
   const current = images[imgIdx] ?? null;
 
-  const waUrl = `${SITE.whatsapp.split("?")[0]}?text=${encodeURIComponent(`Hola Aura, me interesa el modelo ${aid.brand} ${aid.model}. ¿Podrían darme más información?`)}`;
+  const waUrl = `${SITE.whatsapp.split("?")[0]}?text=${encodeURIComponent(
+    `Hola Aura, me interesa el modelo ${aid.brand} ${aid.model}. ¿Podrían darme más información?`,
+  )}`;
+
+  const specs = [
+    { label: "Marca", value: aid.brand },
+    { label: "Modelo", value: aid.model },
+    { label: "Tipo", value: aid.type },
+    aid.technology && { label: "Tecnología", value: aid.technology },
+    aid.hearing_loss_level && { label: "Pérdida", value: aid.hearing_loss_level },
+    aid.color && { label: "Color", value: aid.color },
+    { label: "Bluetooth", value: aid.bluetooth ? "Sí" : "No" },
+    { label: "Recargable", value: aid.rechargeable ? "Sí" : "No" },
+    { label: "Garantía", value: aid.warranty },
+  ].filter(Boolean) as { label: string; value: string }[];
 
   return (
     <>
-      <div className="pt-28 pb-4">
+      {/* Breadcrumb */}
+      <div className="pt-28 pb-2">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <Link to="/catalogo" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary">
-            <ArrowLeft className="size-4" /> Volver al catálogo
+          <Link
+            to="/catalogo"
+            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition"
+          >
+            <ArrowLeft className="size-4" /> Catálogo
           </Link>
         </div>
       </div>
 
-      <section className="pb-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-          {/* Gallery */}
-          <div className="lg:sticky lg:top-28">
-            <div className="aspect-square rounded-3xl overflow-hidden bg-white border border-border/40 shadow-card">
-              {current ? (
-                <img src={current} alt={`${aid.brand} ${aid.model}`} className="size-full object-contain p-10" />
-              ) : (
-                <ProductImagePlaceholder label={`${aid.brand} ${aid.model}`} className="size-full rounded-none" />
+      {/* HERO — Apple product layout */}
+      <section className="pb-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-16 items-start">
+          {/* Gallery column */}
+          <div className="lg:sticky lg:top-24 animate-fade-up">
+            <div className="relative group">
+              <div className="aspect-square rounded-[2.5rem] overflow-hidden bg-gradient-product border border-border/40 shadow-luxe">
+                {current ? (
+                  <img
+                    key={current}
+                    src={current}
+                    alt={`${aid.brand} ${aid.model}`}
+                    className="size-full object-contain p-14 md:p-16 animate-zoom-fade cursor-zoom-in transition-transform duration-700 group-hover:scale-[1.03]"
+                    onClick={() => setLightbox(imgIdx)}
+                  />
+                ) : (
+                  <ProductImagePlaceholder label={`${aid.brand} ${aid.model}`} className="size-full rounded-none" />
+                )}
+              </div>
+              {images.length > 0 && (
+                <button
+                  onClick={() => setLightbox(imgIdx)}
+                  className="absolute top-4 right-4 size-11 rounded-full glass hover:bg-white transition flex items-center justify-center text-primary shadow-soft"
+                  aria-label="Ampliar imagen"
+                >
+                  <Expand className="size-4" />
+                </button>
+              )}
+              {aid.brand && (
+                <div className="absolute top-5 left-5 text-[10px] tracking-[0.28em] uppercase font-semibold text-ink/60">
+                  {aid.brand}
+                </div>
               )}
             </div>
+
             {images.length > 1 && (
-              <div className="mt-4 grid grid-cols-5 gap-3">
-                {images.map((src, i) => (
+              <div className="mt-5 grid grid-cols-5 gap-3">
+                {images.slice(0, 5).map((src, i) => (
                   <button
                     key={i}
                     onClick={() => setImgIdx(i)}
-                    className={`aspect-square rounded-xl overflow-hidden border-2 transition-all ${i === imgIdx ? "border-primary" : "border-transparent hover:border-border"}`}
+                    className={`aspect-square rounded-2xl overflow-hidden bg-white border-2 transition-all ${
+                      i === imgIdx ? "border-primary shadow-soft" : "border-transparent hover:border-border"
+                    }`}
                   >
-                    <img src={src} alt="" className="size-full object-contain bg-white p-2" />
+                    <img src={src} alt="" className="size-full object-contain p-2" />
                   </button>
                 ))}
               </div>
             )}
+            {images.length > 1 && (
+              <button
+                onClick={() => setLightbox(0)}
+                className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-primary hover:gap-3 transition-all"
+              >
+                Ver las {images.length} fotos <ArrowRight className="size-4" />
+              </button>
+            )}
           </div>
 
-          {/* Info */}
-          <div>
-            <div className="text-xs uppercase tracking-[0.28em] text-gold font-semibold">{aid.brand}</div>
-            <h1 className="mt-3 font-display text-5xl md:text-6xl leading-[1.05] tracking-tight text-foreground">
+          {/* Info column */}
+          <div className="animate-fade-up">
+            <div className="text-xs uppercase tracking-[0.32em] text-gold font-semibold">{aid.brand}</div>
+            <h1 className="mt-3 font-display text-5xl md:text-6xl leading-[1.02] tracking-tight text-foreground">
               {aid.model}
             </h1>
             <p className="mt-3 text-lg text-muted-foreground">{aid.type}</p>
 
             {aid.short_description && (
-              <p className="mt-8 text-xl leading-relaxed text-foreground/85">{aid.short_description}</p>
+              <p className="mt-8 text-xl leading-relaxed text-foreground/85 font-light">
+                {aid.short_description}
+              </p>
             )}
 
             {/* Spec chips */}
@@ -125,113 +208,240 @@ function DetailPage() {
               {aid.hearing_loss_level && <SpecChip>Pérdida {aid.hearing_loss_level.toLowerCase()}</SpecChip>}
             </div>
 
-            {/* CTAs */}
-            <div className="mt-10 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="bg-gradient-primary text-primary-foreground rounded-full">
-                <Link to="/contacto"><Calendar className="mr-2 size-4" /> Agendar evaluación</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="rounded-full">
-                <a href={waUrl} target="_blank" rel="noopener"><MessageCircle className="mr-2 size-4" /> Solicitar información</a>
-              </Button>
+            {/* CTA card */}
+            <div className="mt-10 rounded-3xl border border-border/60 bg-gradient-to-br from-secondary/40 to-transparent p-6">
+              <div className="flex items-center gap-2 text-sm">
+                <Sparkles className="size-4 text-gold" />
+                <span className="font-medium">Evaluación auditiva gratuita</span>
+              </div>
+              <p className="mt-1.5 text-sm text-muted-foreground">
+                Te acompañamos en la adaptación y programación fina de tu audífono.
+              </p>
+              <div className="mt-5 flex flex-wrap gap-3">
+                <Button asChild size="lg" className="bg-gradient-primary text-primary-foreground rounded-full shadow-soft">
+                  <Link to="/contacto">
+                    <Calendar className="mr-2 size-4" /> Agendar evaluación
+                  </Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="rounded-full border-border/80">
+                  <a href={waUrl} target="_blank" rel="noopener">
+                    <MessageCircle className="mr-2 size-4" /> WhatsApp
+                  </a>
+                </Button>
+              </div>
             </div>
 
-            {/* Full description */}
-            {aid.full_description && (
-              <div className="mt-12 prose prose-neutral max-w-none">
-                <h2 className="font-display text-2xl">Descripción</h2>
-                <p className="text-foreground/80 leading-relaxed whitespace-pre-line">{aid.full_description}</p>
+            {/* Highlights */}
+            <div className="mt-10 grid grid-cols-3 gap-4">
+              {[
+                { i: Ear, t: "Adaptación", d: "personalizada" },
+                { i: ShieldCheck, t: "Garantía", d: aid.warranty },
+                { i: Layers, t: "Soporte", d: "de por vida" },
+              ].map(({ i: Icon, t, d }) => (
+                <div key={t} className="rounded-2xl bg-secondary/40 border border-border/40 p-4">
+                  <Icon className="size-5 text-primary" />
+                  <div className="mt-2 text-sm font-semibold">{t}</div>
+                  <div className="text-xs text-muted-foreground">{d}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PHOTO SHOWCASE — full gallery display */}
+      {images.length > 1 && (
+        <section className="py-20 bg-gradient-ink text-white overflow-hidden">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="flex items-end justify-between mb-12">
+              <div>
+                <div className="text-[10px] tracking-[0.32em] uppercase text-gold/90 font-semibold">Galería</div>
+                <h2 className="mt-3 font-display text-4xl md:text-5xl leading-tight">
+                  Cada detalle,<br />
+                  <span className="italic text-white/70">en primer plano.</span>
+                </h2>
               </div>
+              <div className="hidden md:block text-sm text-white/60">
+                Toca cualquier foto para ampliarla
+              </div>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[280px] md:auto-rows-[340px]">
+              {images.map((src, i) => {
+                const big = i === 0;
+                return (
+                  <button
+                    key={i}
+                    onClick={() => setLightbox(i)}
+                    className={`group relative overflow-hidden rounded-3xl bg-gradient-product border border-white/5 hover:border-white/20 transition-all ${
+                      big ? "md:col-span-2 md:row-span-2" : ""
+                    }`}
+                  >
+                    <img
+                      src={src}
+                      alt={`${aid.brand} ${aid.model} — vista ${i + 1}`}
+                      className="size-full object-contain p-8 md:p-12 transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute bottom-4 right-4 size-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Expand className="size-4 text-white" />
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* DESCRIPTION + BENEFITS */}
+      <section className="py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 grid lg:grid-cols-3 gap-12">
+          <div className="lg:col-span-2">
+            {aid.full_description && (
+              <>
+                <div className="text-[10px] tracking-[0.32em] uppercase text-gold font-semibold">Descripción</div>
+                <h2 className="mt-3 font-display text-4xl md:text-5xl leading-[1.05]">
+                  Diseñado para <span className="italic text-primary">escucharlo todo</span>.
+                </h2>
+                <p className="mt-8 text-lg leading-relaxed text-foreground/80 whitespace-pre-line font-light">
+                  {aid.full_description}
+                </p>
+              </>
             )}
 
-            {/* Benefits */}
-            {aid.benefits.length > 0 && (
-              <div className="mt-12">
-                <h2 className="font-display text-2xl">Beneficios</h2>
-                <ul className="mt-4 space-y-2">
-                  {aid.benefits.map((b, i) => (
+            {aid.features.length > 0 && (
+              <div className="mt-16">
+                <h3 className="font-display text-2xl">Características</h3>
+                <ul className="mt-6 grid sm:grid-cols-2 gap-3">
+                  {aid.features.map((f, i) => (
                     <li key={i} className="flex items-start gap-3 text-foreground/80">
-                      <span className="mt-2 size-1.5 rounded-full bg-gold shrink-0" /> {b}
+                      <CheckCircle2 className="size-5 text-primary shrink-0 mt-0.5" />
+                      <span>{f}</span>
                     </li>
                   ))}
                 </ul>
               </div>
             )}
 
-            {/* Features */}
-            {aid.features.length > 0 && (
-              <div className="mt-12">
-                <h2 className="font-display text-2xl">Características</h2>
-                <ul className="mt-4 space-y-2 text-foreground/80">
-                  {aid.features.map((f, i) => <li key={i}>• {f}</li>)}
-                </ul>
-              </div>
-            )}
-
-            {/* Technologies */}
             {aid.technologies.length > 0 && (
-              <div className="mt-12">
-                <h2 className="font-display text-2xl">Tecnologías</h2>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {aid.technologies.map((t) => <SpecChip key={t}>{t}</SpecChip>)}
+              <div className="mt-16">
+                <h3 className="font-display text-2xl">Tecnologías</h3>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {aid.technologies.map((t) => (
+                    <SpecChip key={t}>{t}</SpecChip>
+                  ))}
                 </div>
               </div>
             )}
 
-            {/* Accessories */}
             {aid.compatible_accessories.length > 0 && (
-              <div className="mt-12">
-                <h2 className="font-display text-2xl">Accesorios compatibles</h2>
-                <ul className="mt-4 space-y-2 text-foreground/80">
-                  {aid.compatible_accessories.map((f, i) => <li key={i}>• {f}</li>)}
+              <div className="mt-16">
+                <h3 className="font-display text-2xl">Accesorios compatibles</h3>
+                <ul className="mt-6 space-y-2 text-foreground/80">
+                  {aid.compatible_accessories.map((f, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="mt-2 size-1.5 rounded-full bg-gold shrink-0" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+
+          {/* Sidebar: benefits + specs */}
+          <aside className="space-y-8 lg:sticky lg:top-24 h-fit">
+            {aid.benefits.length > 0 && (
+              <div className="rounded-3xl border border-border/60 p-6 bg-secondary/30">
+                <h3 className="font-display text-xl">Beneficios</h3>
+                <ul className="mt-4 space-y-3">
+                  {aid.benefits.map((b, i) => (
+                    <li key={i} className="flex items-start gap-3 text-sm text-foreground/85">
+                      <span className="mt-1.5 size-1.5 rounded-full bg-gold shrink-0" />
+                      {b}
+                    </li>
+                  ))}
                 </ul>
               </div>
             )}
 
-            {/* FAQs */}
-            {aid.faqs.length > 0 && (
-              <div className="mt-12">
-                <h2 className="font-display text-2xl">Preguntas frecuentes</h2>
-                <Accordion type="single" collapsible className="mt-4">
-                  {aid.faqs.map((f, i) => (
-                    <AccordionItem key={i} value={`f-${i}`}>
-                      <AccordionTrigger>{f.q}</AccordionTrigger>
-                      <AccordionContent>{f.a}</AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-              </div>
-            )}
-          </div>
+            <div className="rounded-3xl border border-border/60 p-6">
+              <h3 className="font-display text-xl">Especificaciones</h3>
+              <dl className="mt-4 divide-y divide-border/60">
+                {specs.map((s) => (
+                  <div key={s.label} className="py-2.5 flex items-center justify-between text-sm">
+                    <dt className="text-muted-foreground">{s.label}</dt>
+                    <dd className="font-medium text-foreground text-right">{s.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </aside>
         </div>
       </section>
 
+      {/* FAQs */}
+      {aid.faqs.length > 0 && (
+        <section className="py-20 bg-secondary/30 border-t border-border/40">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center">
+              <div className="text-[10px] tracking-[0.32em] uppercase text-gold font-semibold">Preguntas frecuentes</div>
+              <h2 className="mt-3 font-display text-4xl md:text-5xl">Antes de decidir</h2>
+            </div>
+            <Accordion type="single" collapsible className="mt-10">
+              {aid.faqs.map((f, i) => (
+                <AccordionItem key={i} value={`f-${i}`} className="border-border/60">
+                  <AccordionTrigger className="text-left font-display text-lg">{f.q}</AccordionTrigger>
+                  <AccordionContent className="text-foreground/80 leading-relaxed">{f.a}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </section>
+      )}
+
       {/* Related */}
       {related && related.length > 0 && (
-        <section className="py-16 bg-secondary/30 border-t border-border/40">
+        <section className="py-20 border-t border-border/40">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="flex items-end justify-between mb-8">
-              <h2 className="font-display text-3xl">Más de {aid.brand}</h2>
-              <Link to="/catalogo" className="text-sm text-primary font-medium inline-flex items-center gap-1">
+            <div className="flex items-end justify-between mb-10">
+              <div>
+                <div className="text-[10px] tracking-[0.32em] uppercase text-gold font-semibold">
+                  Más de {aid.brand}
+                </div>
+                <h2 className="mt-3 font-display text-3xl md:text-4xl">También podrías considerar</h2>
+              </div>
+              <Link to="/catalogo" className="text-sm text-primary font-medium inline-flex items-center gap-1 hover:gap-2 transition-all">
                 Ver todo <ArrowRight className="size-4" />
               </Link>
             </div>
-            <div className="grid sm:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
               {related.map((r) => (
                 <Link key={r.id} to="/catalogo/$slug" params={{ slug: r.slug }} className="group">
-                  <div className="aspect-square rounded-2xl bg-white border border-border/40 overflow-hidden shadow-soft group-hover:shadow-card transition-shadow">
+                  <div className="aspect-square rounded-3xl bg-gradient-product border border-border/40 overflow-hidden shadow-soft group-hover:shadow-card group-hover:-translate-y-1 transition-all duration-500">
                     {r.main_image_url ? (
                       <img src={r.main_image_url} className="size-full object-contain p-6" alt="" />
                     ) : (
                       <ProductImagePlaceholder className="size-full rounded-none" />
                     )}
                   </div>
-                  <div className="mt-3 text-[11px] uppercase tracking-widest text-gold font-semibold">{r.brand}</div>
-                  <div className="font-display text-xl group-hover:text-primary">{r.model}</div>
+                  <div className="mt-4 text-[10px] uppercase tracking-[0.28em] text-gold font-semibold">{r.brand}</div>
+                  <div className="mt-1 font-display text-lg group-hover:text-primary transition-colors">{r.model}</div>
                 </Link>
               ))}
             </div>
           </div>
         </section>
+      )}
+
+      {lightbox !== null && images.length > 0 && (
+        <Lightbox
+          images={images}
+          index={lightbox}
+          onClose={() => setLightbox(null)}
+          onIndex={setLightbox}
+          alt={`${aid.brand} ${aid.model}`}
+        />
       )}
     </>
   );
@@ -250,7 +460,9 @@ function ErrorState() {
     <div className="pt-40 pb-24 text-center">
       <h1 className="font-display text-3xl">Modelo no encontrado</h1>
       <p className="mt-3 text-muted-foreground">El audífono que buscas no está disponible.</p>
-      <Button asChild className="mt-6"><Link to="/catalogo">Volver al catálogo</Link></Button>
+      <Button asChild className="mt-6">
+        <Link to="/catalogo">Volver al catálogo</Link>
+      </Button>
     </div>
   );
 }
