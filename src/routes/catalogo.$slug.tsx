@@ -390,7 +390,7 @@ function DetailPage() {
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <div className="text-center">
               <div className="text-[10px] tracking-[0.32em] uppercase text-gold font-semibold">Preguntas frecuentes</div>
-              <h2 className="mt-3 font-display text-4xl md:text-5xl">Antes de decidir</h2>
+              <h2 className="mt-3 font-editorial text-5xl md:text-6xl italic">Antes de decidir</h2>
             </div>
             <Accordion type="single" collapsible className="mt-10">
               {aid.faqs.map((f, i) => (
