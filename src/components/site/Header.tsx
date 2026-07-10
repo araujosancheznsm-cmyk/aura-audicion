@@ -26,13 +26,20 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-        scrolled ? "glass shadow-soft" : "bg-transparent"
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ease-apple ${
+        scrolled
+          ? "backdrop-blur-2xl bg-background/75 border-b border-border/40 shadow-[0_8px_30px_-12px_rgba(15,60,110,0.15)]"
+          : "bg-transparent border-b border-transparent"
       }`}
+      style={scrolled ? { backdropFilter: "blur(24px) saturate(1.6)", WebkitBackdropFilter: "blur(24px) saturate(1.6)" } : undefined}
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
+      <div
+        className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-all duration-500 ease-apple ${
+          scrolled ? "h-16" : "h-20"
+        }`}
+      >
         <Link to="/" className="flex items-center gap-3 group">
-          <Logo size={52} />
+          <Logo size={scrolled ? 42 : 52} className="transition-all duration-500 ease-apple" />
           <span className="sr-only">Aura Audición</span>
         </Link>
 
@@ -42,8 +49,8 @@ export function Header() {
               key={n.to}
               to={n.to}
               activeOptions={{ exact: n.to === "/" }}
-              className="px-3 py-2 text-sm font-medium text-foreground/80 rounded-md hover:text-primary hover:bg-secondary transition-colors"
-              activeProps={{ className: "text-primary bg-secondary" }}
+              className="relative px-4 py-2 text-[13px] font-medium text-foreground/75 rounded-full hover:text-primary transition-colors duration-300"
+              activeProps={{ className: "text-primary bg-secondary/80" }}
             >
               {n.label}
             </Link>
@@ -51,7 +58,11 @@ export function Header() {
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
-          <Button asChild className="bg-gradient-primary text-primary-foreground hover:opacity-90">
+          <Button
+            asChild
+            size={scrolled ? "sm" : "default"}
+            className="bg-gradient-primary text-primary-foreground hover:opacity-90 rounded-full shadow-soft transition-all duration-500 ease-apple"
+          >
             <Link to="/contacto">Agenda tu evaluación</Link>
           </Button>
         </div>
