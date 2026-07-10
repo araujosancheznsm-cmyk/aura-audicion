@@ -413,7 +413,7 @@ function DetailPage() {
                 <div className="text-[10px] tracking-[0.32em] uppercase text-gold font-semibold">
                   Más de {aid.brand}
                 </div>
-                <h2 className="mt-3 font-display text-3xl md:text-4xl">También podrías considerar</h2>
+                <h2 className="mt-3 font-editorial text-4xl md:text-5xl">También podrías considerar</h2>
               </div>
               <Link to="/catalogo" className="text-sm text-primary font-medium inline-flex items-center gap-1 hover:gap-2 transition-all">
                 Ver todo <ArrowRight className="size-4" />
@@ -422,15 +422,17 @@ function DetailPage() {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
               {related.map((r) => (
                 <Link key={r.id} to="/catalogo/$slug" params={{ slug: r.slug }} className="group">
-                  <div className="aspect-square rounded-3xl bg-gradient-product border border-border/40 overflow-hidden shadow-soft group-hover:shadow-card group-hover:-translate-y-1 transition-all duration-500">
+                  <div className="relative aspect-square flex items-center justify-center overflow-visible transition-all duration-700 ease-apple group-hover:-translate-y-2">
+                    <div className="absolute inset-6 rounded-full bg-primary/10 blur-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-700" />
+                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2/3 h-4 rounded-full bg-ink/25 blur-xl" />
                     {r.main_image_url ? (
-                      <img src={r.main_image_url} className="size-full object-contain p-6" alt="" />
+                      <img src={r.main_image_url} className="relative z-10 max-w-[80%] max-h-[80%] object-contain drop-shadow-product transition-transform duration-700 ease-apple group-hover:scale-[1.05]" alt="" />
                     ) : (
-                      <ProductImagePlaceholder className="size-full rounded-none" />
+                      <ProductImagePlaceholder className="size-full rounded-3xl" />
                     )}
                   </div>
                   <div className="mt-4 text-[10px] uppercase tracking-[0.28em] text-gold font-semibold">{r.brand}</div>
-                  <div className="mt-1 font-display text-lg group-hover:text-primary transition-colors">{r.model}</div>
+                  <div className="mt-1 font-editorial text-xl group-hover:text-primary transition-colors">{r.model}</div>
                 </Link>
               ))}
             </div>
