@@ -304,7 +304,7 @@ function DetailPage() {
             {aid.full_description && (
               <>
                 <div className="text-[10px] tracking-[0.32em] uppercase text-gold font-semibold">Descripción</div>
-                <h2 className="mt-3 font-display text-4xl md:text-5xl leading-[1.05]">
+                <h2 className="mt-3 font-editorial text-5xl md:text-6xl leading-[1.0]">
                   Diseñado para <span className="italic text-primary">escucharlo todo</span>.
                 </h2>
                 <p className="mt-8 text-lg leading-relaxed text-foreground/80 whitespace-pre-line font-light">
