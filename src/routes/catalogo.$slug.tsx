@@ -259,33 +259,34 @@ function DetailPage() {
             <div className="flex items-end justify-between mb-12">
               <div>
                 <div className="text-[10px] tracking-[0.32em] uppercase text-gold/90 font-semibold">Galería</div>
-                <h2 className="mt-3 font-display text-4xl md:text-5xl leading-tight">
+                <h2 className="mt-3 font-editorial text-5xl md:text-6xl leading-[0.98]">
                   Cada detalle,<br />
-                  <span className="italic text-white/70">en primer plano.</span>
+                  <span className="italic text-white/60">en primer plano.</span>
                 </h2>
               </div>
               <div className="hidden md:block text-sm text-white/60">
                 Toca cualquier foto para ampliarla
               </div>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[280px] md:auto-rows-[340px]">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-10 auto-rows-[280px] md:auto-rows-[360px]">
               {images.map((src, i) => {
                 const big = i === 0;
                 return (
                   <button
                     key={i}
                     onClick={() => setLightbox(i)}
-                    className={`group relative overflow-hidden rounded-3xl bg-gradient-product border border-white/5 hover:border-white/20 transition-all ${
+                    className={`group relative flex items-center justify-center overflow-visible transition-all duration-700 ease-apple ${
                       big ? "md:col-span-2 md:row-span-2" : ""
                     }`}
                   >
+                    <div className="absolute inset-6 rounded-full bg-primary/20 blur-3xl opacity-40 group-hover:opacity-70 transition-opacity duration-700" />
+                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-2/3 h-5 rounded-full bg-black/60 blur-2xl" />
                     <img
                       src={src}
                       alt={`${aid.brand} ${aid.model} — vista ${i + 1}`}
-                      className="size-full object-contain p-8 md:p-12 transition-transform duration-700 group-hover:scale-105"
+                      className="relative z-10 max-w-[82%] max-h-[82%] object-contain transition-transform duration-[900ms] ease-apple group-hover:scale-[1.06] group-hover:-translate-y-1 drop-shadow-product-dark"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <div className="absolute bottom-4 right-4 size-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="absolute bottom-3 right-3 size-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20">
                       <Expand className="size-4 text-white" />
                     </div>
                   </button>
