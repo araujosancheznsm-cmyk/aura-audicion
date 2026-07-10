@@ -48,7 +48,12 @@ a[href*="lovable.app"][target="_blank"][class*="badge" i] {
   --color-ring: var(--ring);
 
   --font-display: "Fraunces", "Cormorant Garamond", Georgia, serif;
+  --font-editorial: "Instrument Serif", "Fraunces", Georgia, serif;
   --font-sans: "Inter", system-ui, sans-serif;
+
+  --ease-apple: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-apple-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
 
   --shadow-soft: 0 10px 40px -20px color-mix(in oklab, var(--primary) 35%, transparent);
   --shadow-card: 0 20px 60px -30px color-mix(in oklab, var(--primary) 30%, transparent);
@@ -135,6 +140,7 @@ a[href*="lovable.app"][target="_blank"][class*="badge" i] {
 
 @layer utilities {
   .font-display { font-family: var(--font-display); }
+  .font-editorial { font-family: var(--font-editorial); letter-spacing: -0.02em; }
   .bg-gradient-primary { background: var(--gradient-primary); }
   .bg-gradient-hero { background: var(--gradient-hero); }
   .bg-gradient-ink { background: var(--gradient-ink); }
@@ -158,10 +164,10 @@ a[href*="lovable.app"][target="_blank"][class*="badge" i] {
     color: transparent;
   }
   .glass {
-    background: color-mix(in oklab, var(--background) 70%, transparent);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid color-mix(in oklab, var(--primary) 10%, transparent);
+    background: color-mix(in oklab, var(--background) 72%, transparent);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border: 1px solid color-mix(in oklab, var(--primary) 8%, transparent);
   }
   .glass-dark {
     background: color-mix(in oklab, var(--ink) 65%, transparent);
@@ -172,10 +178,42 @@ a[href*="lovable.app"][target="_blank"][class*="badge" i] {
   .shadow-soft { box-shadow: var(--shadow-soft); }
   .shadow-card { box-shadow: var(--shadow-card); }
   .shadow-luxe { box-shadow: var(--shadow-luxe); }
+  .drop-shadow-product {
+    filter: drop-shadow(0 30px 40px color-mix(in oklab, var(--ink) 35%, transparent))
+            drop-shadow(0 10px 20px color-mix(in oklab, var(--primary) 20%, transparent));
+  }
+  .drop-shadow-product-dark {
+    filter: drop-shadow(0 40px 60px rgba(0,0,0,0.55))
+            drop-shadow(0 15px 25px rgba(0,0,0,0.4));
+  }
   .noise {
     background-image: radial-gradient(color-mix(in oklab, currentColor 8%, transparent) 1px, transparent 1px);
     background-size: 3px 3px;
   }
+  .ease-apple { transition-timing-function: var(--ease-apple); }
+  .ease-spring { transition-timing-function: var(--ease-spring); }
+}
+
+/* Scroll-reveal (Apple-style: fade + subtle rise + slight scale) */
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: reveal-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 25%;
+  }
+  .reveal-soft {
+    animation: reveal-soft linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+}
+@keyframes reveal-in {
+  from { opacity: 0; transform: translateY(40px) scale(0.98); filter: blur(6px); }
+  to   { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+@keyframes reveal-soft {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes float-y {

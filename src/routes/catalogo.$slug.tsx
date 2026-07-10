@@ -125,52 +125,55 @@ function DetailPage() {
         </div>
       </div>
 
-      {/* HERO — Apple product layout */}
-      <section className="pb-24">
+      {/* HERO — Apple product layout with fully integrated image */}
+      <section className="pb-24 overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-16 items-start">
-          {/* Gallery column */}
+          {/* Gallery column — image floats freely, no card frame */}
           <div className="lg:sticky lg:top-24 animate-fade-up">
-            <div className="relative group">
-              <div className="aspect-square rounded-[2.5rem] overflow-hidden bg-gradient-product border border-border/40 shadow-luxe">
-                {current ? (
-                  <img
-                    key={current}
-                    src={current}
-                    alt={`${aid.brand} ${aid.model}`}
-                    className="size-full object-contain p-14 md:p-16 animate-zoom-fade cursor-zoom-in transition-transform duration-700 group-hover:scale-[1.03]"
-                    onClick={() => setLightbox(imgIdx)}
-                  />
-                ) : (
-                  <ProductImagePlaceholder label={`${aid.brand} ${aid.model}`} className="size-full rounded-none" />
-                )}
-              </div>
+            <div className="relative group aspect-square flex items-center justify-center">
+              {/* Ambient glow behind the product */}
+              <div className="absolute inset-8 rounded-full bg-gradient-to-br from-primary/15 via-primary/5 to-transparent blur-3xl opacity-70 group-hover:opacity-100 transition-opacity duration-1000" />
+              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-3/5 h-6 rounded-full bg-ink/25 blur-2xl" />
+
+              {current ? (
+                <img
+                  key={current}
+                  src={current}
+                  alt={`${aid.brand} ${aid.model}`}
+                  className="relative z-10 max-w-[86%] max-h-[86%] object-contain animate-zoom-fade cursor-zoom-in transition-transform duration-[900ms] ease-apple group-hover:scale-[1.04] group-hover:-translate-y-1 drop-shadow-product"
+                  onClick={() => setLightbox(imgIdx)}
+                />
+              ) : (
+                <ProductImagePlaceholder label={`${aid.brand} ${aid.model}`} className="size-full rounded-none" />
+              )}
+
               {images.length > 0 && (
                 <button
                   onClick={() => setLightbox(imgIdx)}
-                  className="absolute top-4 right-4 size-11 rounded-full glass hover:bg-white transition flex items-center justify-center text-primary shadow-soft"
+                  className="absolute top-2 right-2 size-11 rounded-full glass hover:bg-white transition-all duration-500 ease-apple flex items-center justify-center text-primary shadow-soft z-20 opacity-0 group-hover:opacity-100"
                   aria-label="Ampliar imagen"
                 >
                   <Expand className="size-4" />
                 </button>
               )}
               {aid.brand && (
-                <div className="absolute top-5 left-5 text-[10px] tracking-[0.28em] uppercase font-semibold text-ink/60">
+                <div className="absolute top-3 left-3 text-[10px] tracking-[0.32em] uppercase font-semibold text-ink/40 z-20">
                   {aid.brand}
                 </div>
               )}
             </div>
 
             {images.length > 1 && (
-              <div className="mt-5 grid grid-cols-5 gap-3">
-                {images.slice(0, 5).map((src, i) => (
+              <div className="mt-5 flex flex-wrap gap-3 justify-center">
+                {images.slice(0, 6).map((src, i) => (
                   <button
                     key={i}
                     onClick={() => setImgIdx(i)}
-                    className={`aspect-square rounded-2xl overflow-hidden bg-white border-2 transition-all ${
-                      i === imgIdx ? "border-primary shadow-soft" : "border-transparent hover:border-border"
+                    className={`size-16 rounded-2xl overflow-hidden flex items-center justify-center transition-all duration-500 ease-apple ${
+                      i === imgIdx ? "ring-2 ring-primary ring-offset-2 ring-offset-background scale-105" : "opacity-60 hover:opacity-100 hover:scale-105"
                     }`}
                   >
-                    <img src={src} alt="" className="size-full object-contain p-2" />
+                    <img src={src} alt="" className="max-w-full max-h-full object-contain" />
                   </button>
                 ))}
               </div>
@@ -178,7 +181,7 @@ function DetailPage() {
             {images.length > 1 && (
               <button
                 onClick={() => setLightbox(0)}
-                className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-primary hover:gap-3 transition-all"
+                className="mt-4 mx-auto flex items-center gap-2 text-sm font-medium text-primary hover:gap-3 transition-all duration-500 ease-apple"
               >
                 Ver las {images.length} fotos <ArrowRight className="size-4" />
               </button>
@@ -188,10 +191,10 @@ function DetailPage() {
           {/* Info column */}
           <div className="animate-fade-up">
             <div className="text-xs uppercase tracking-[0.32em] text-gold font-semibold">{aid.brand}</div>
-            <h1 className="mt-3 font-display text-5xl md:text-6xl leading-[1.02] tracking-tight text-foreground">
+            <h1 className="mt-3 font-editorial text-6xl md:text-7xl leading-[0.95] tracking-tight text-foreground">
               {aid.model}
             </h1>
-            <p className="mt-3 text-lg text-muted-foreground">{aid.type}</p>
+            <p className="mt-4 text-lg text-muted-foreground italic font-editorial">{aid.type}</p>
 
             {aid.short_description && (
               <p className="mt-8 text-xl leading-relaxed text-foreground/85 font-light">
@@ -218,12 +221,12 @@ function DetailPage() {
                 Te acompañamos en la adaptación y programación fina de tu audífono.
               </p>
               <div className="mt-5 flex flex-wrap gap-3">
-                <Button asChild size="lg" className="bg-gradient-primary text-primary-foreground rounded-full shadow-soft">
+                <Button asChild size="lg" className="bg-gradient-primary text-primary-foreground rounded-full shadow-soft hover:scale-[1.03] transition-transform duration-500 ease-apple">
                   <Link to="/contacto">
                     <Calendar className="mr-2 size-4" /> Agendar evaluación
                   </Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="rounded-full border-border/80">
+                <Button asChild size="lg" variant="outline" className="rounded-full border-border/80 hover:scale-[1.03] transition-transform duration-500 ease-apple">
                   <a href={waUrl} target="_blank" rel="noopener">
                     <MessageCircle className="mr-2 size-4" /> WhatsApp
                   </a>
@@ -238,7 +241,7 @@ function DetailPage() {
                 { i: ShieldCheck, t: "Garantía", d: aid.warranty },
                 { i: Layers, t: "Soporte", d: "de por vida" },
               ].map(({ i: Icon, t, d }) => (
-                <div key={t} className="rounded-2xl bg-secondary/40 border border-border/40 p-4">
+                <div key={t} className="rounded-2xl bg-secondary/40 border border-border/40 p-4 hover:-translate-y-1 hover:shadow-soft transition-all duration-500 ease-apple">
                   <Icon className="size-5 text-primary" />
                   <div className="mt-2 text-sm font-semibold">{t}</div>
                   <div className="text-xs text-muted-foreground">{d}</div>
@@ -256,33 +259,34 @@ function DetailPage() {
             <div className="flex items-end justify-between mb-12">
               <div>
                 <div className="text-[10px] tracking-[0.32em] uppercase text-gold/90 font-semibold">Galería</div>
-                <h2 className="mt-3 font-display text-4xl md:text-5xl leading-tight">
+                <h2 className="mt-3 font-editorial text-5xl md:text-6xl leading-[0.98]">
                   Cada detalle,<br />
-                  <span className="italic text-white/70">en primer plano.</span>
+                  <span className="italic text-white/60">en primer plano.</span>
                 </h2>
               </div>
               <div className="hidden md:block text-sm text-white/60">
                 Toca cualquier foto para ampliarla
               </div>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[280px] md:auto-rows-[340px]">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-10 auto-rows-[280px] md:auto-rows-[360px]">
               {images.map((src, i) => {
                 const big = i === 0;
                 return (
                   <button
                     key={i}
                     onClick={() => setLightbox(i)}
-                    className={`group relative overflow-hidden rounded-3xl bg-gradient-product border border-white/5 hover:border-white/20 transition-all ${
+                    className={`group relative flex items-center justify-center overflow-visible transition-all duration-700 ease-apple ${
                       big ? "md:col-span-2 md:row-span-2" : ""
                     }`}
                   >
+                    <div className="absolute inset-6 rounded-full bg-primary/20 blur-3xl opacity-40 group-hover:opacity-70 transition-opacity duration-700" />
+                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-2/3 h-5 rounded-full bg-black/60 blur-2xl" />
                     <img
                       src={src}
                       alt={`${aid.brand} ${aid.model} — vista ${i + 1}`}
-                      className="size-full object-contain p-8 md:p-12 transition-transform duration-700 group-hover:scale-105"
+                      className="relative z-10 max-w-[82%] max-h-[82%] object-contain transition-transform duration-[900ms] ease-apple group-hover:scale-[1.06] group-hover:-translate-y-1 drop-shadow-product-dark"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <div className="absolute bottom-4 right-4 size-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="absolute bottom-3 right-3 size-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20">
                       <Expand className="size-4 text-white" />
                     </div>
                   </button>
@@ -300,7 +304,7 @@ function DetailPage() {
             {aid.full_description && (
               <>
                 <div className="text-[10px] tracking-[0.32em] uppercase text-gold font-semibold">Descripción</div>
-                <h2 className="mt-3 font-display text-4xl md:text-5xl leading-[1.05]">
+                <h2 className="mt-3 font-editorial text-5xl md:text-6xl leading-[1.0]">
                   Diseñado para <span className="italic text-primary">escucharlo todo</span>.
                 </h2>
                 <p className="mt-8 text-lg leading-relaxed text-foreground/80 whitespace-pre-line font-light">
@@ -386,7 +390,7 @@ function DetailPage() {
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <div className="text-center">
               <div className="text-[10px] tracking-[0.32em] uppercase text-gold font-semibold">Preguntas frecuentes</div>
-              <h2 className="mt-3 font-display text-4xl md:text-5xl">Antes de decidir</h2>
+              <h2 className="mt-3 font-editorial text-5xl md:text-6xl italic">Antes de decidir</h2>
             </div>
             <Accordion type="single" collapsible className="mt-10">
               {aid.faqs.map((f, i) => (
@@ -409,7 +413,7 @@ function DetailPage() {
                 <div className="text-[10px] tracking-[0.32em] uppercase text-gold font-semibold">
                   Más de {aid.brand}
                 </div>
-                <h2 className="mt-3 font-display text-3xl md:text-4xl">También podrías considerar</h2>
+                <h2 className="mt-3 font-editorial text-4xl md:text-5xl">También podrías considerar</h2>
               </div>
               <Link to="/catalogo" className="text-sm text-primary font-medium inline-flex items-center gap-1 hover:gap-2 transition-all">
                 Ver todo <ArrowRight className="size-4" />
@@ -418,15 +422,17 @@ function DetailPage() {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
               {related.map((r) => (
                 <Link key={r.id} to="/catalogo/$slug" params={{ slug: r.slug }} className="group">
-                  <div className="aspect-square rounded-3xl bg-gradient-product border border-border/40 overflow-hidden shadow-soft group-hover:shadow-card group-hover:-translate-y-1 transition-all duration-500">
+                  <div className="relative aspect-square flex items-center justify-center overflow-visible transition-all duration-700 ease-apple group-hover:-translate-y-2">
+                    <div className="absolute inset-6 rounded-full bg-primary/10 blur-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-700" />
+                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2/3 h-4 rounded-full bg-ink/25 blur-xl" />
                     {r.main_image_url ? (
-                      <img src={r.main_image_url} className="size-full object-contain p-6" alt="" />
+                      <img src={r.main_image_url} className="relative z-10 max-w-[80%] max-h-[80%] object-contain drop-shadow-product transition-transform duration-700 ease-apple group-hover:scale-[1.05]" alt="" />
                     ) : (
-                      <ProductImagePlaceholder className="size-full rounded-none" />
+                      <ProductImagePlaceholder className="size-full rounded-3xl" />
                     )}
                   </div>
                   <div className="mt-4 text-[10px] uppercase tracking-[0.28em] text-gold font-semibold">{r.brand}</div>
-                  <div className="mt-1 font-display text-lg group-hover:text-primary transition-colors">{r.model}</div>
+                  <div className="mt-1 font-editorial text-xl group-hover:text-primary transition-colors">{r.model}</div>
                 </Link>
               ))}
             </div>
