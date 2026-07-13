@@ -15,7 +15,6 @@ import {
   Sparkles,
   ArrowRight,
   MessageCircle,
-  Phone,
   Bluetooth,
   BatteryCharging,
 } from "lucide-react";
@@ -310,9 +309,6 @@ function Home() {
             </div>
             <div className="flex flex-wrap gap-3 lg:justify-end">
               <Button asChild size="lg" className="bg-white text-ink hover:bg-white/90 rounded-full h-12 px-6"><Link to="/contacto">Agendar ahora</Link></Button>
-              <Button asChild size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 rounded-full h-12 px-6">
-                <a href={SITE.phoneHref}><Phone className="mr-2 size-4" />{SITE.phone}</a>
-              </Button>
             </div>
           </div>
         </div>
