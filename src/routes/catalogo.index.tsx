@@ -184,7 +184,7 @@ function CatalogCard({ a }: { a: HearingAid }) {
       </div>
       <div className="pt-5 px-1">
         <div className="text-[11px] uppercase tracking-[0.22em] text-gold font-semibold">{a.brand}</div>
-        <h3 className="mt-1.5 font-display text-2xl leading-tight text-foreground group-hover:text-primary transition-colors">
+        <h3 className="mt-1.5 font-sans text-2xl font-semibold leading-tight text-foreground group-hover:text-primary transition-colors">
           {a.model}
         </h3>
         <p className="mt-1 text-sm text-muted-foreground">{a.type}</p>
