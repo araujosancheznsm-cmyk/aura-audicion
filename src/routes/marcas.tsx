@@ -50,10 +50,10 @@ function Marcas() {
                   </div>
                 ))}
               </div>
-              <Button asChild className="mt-8 bg-gradient-primary text-primary-foreground"><Link to="/audifonos">Ver modelos Oticon</Link></Button>
+              <Button asChild className="mt-8 bg-gradient-primary text-primary-foreground btn-premium"><Link to="/catalogo" search={{ brand: "Oticon" }}>Ver modelos Oticon</Link></Button>
             </CardContent>
           </Card>
-
+ 
           <Card className="hover-lift overflow-hidden">
             <CardContent className="p-10">
               <div className="text-3xl font-display tracking-tight text-primary">Unitron</div>
@@ -76,7 +76,7 @@ function Marcas() {
                   </div>
                 ))}
               </div>
-              <Button asChild className="mt-8 bg-gradient-primary text-primary-foreground"><Link to="/audifonos">Ver modelos Unitron</Link></Button>
+              <Button asChild className="mt-8 bg-gradient-primary text-primary-foreground btn-premium"><Link to="/catalogo" search={{ brand: "Unitron" }}>Ver modelos Unitron</Link></Button>
             </CardContent>
           </Card>
         </div>

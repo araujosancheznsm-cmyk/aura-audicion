@@ -10,7 +10,14 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { SITE } from "@/lib/site";
 
+import { z } from "zod";
+
+const searchSchema = z.object({
+  brand: z.string().optional(),
+});
+
 export const Route = createFileRoute("/catalogo/")({
+  validateSearch: (search) => searchSchema.parse(search),
   head: () => ({
     meta: [
       { title: "Catálogo de audífonos Oticon y Unitron · Aura Audición" },
@@ -41,8 +48,11 @@ async function fetchCatalog(): Promise<HearingAid[]> {
 
 function CatalogoPage() {
   const { data, isLoading } = useQuery({ queryKey: ["catalog", "public"], queryFn: fetchCatalog });
+  const search = Route.useSearch();
   const [q, setQ] = useState("");
-  const [brand, setBrand] = useState<(typeof BRANDS)[number]>("Todas");
+  const [brand, setBrand] = useState<(typeof BRANDS)[number]>(
+    (search.brand === "Oticon" || search.brand === "Unitron") ? search.brand : "Todas"
+  );
   const [type, setType] = useState<(typeof TYPES)[number]>("Todos");
   const [bt, setBt] = useState(false);
   const [rc, setRc] = useState(false);
