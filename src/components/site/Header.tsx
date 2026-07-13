@@ -26,16 +26,18 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ease-apple ${
+      className={`fixed inset-x-0 z-50 transition-all duration-500 ease-apple ${
         scrolled
-          ? "backdrop-blur-2xl bg-background/75 border-b border-border/40 shadow-[0_8px_30px_-12px_rgba(15,60,110,0.15)]"
-          : "bg-transparent border-b border-transparent"
+          ? (open
+              ? "top-4 mx-4 md:mx-auto max-w-5xl rounded-[2rem] border border-border/50 bg-background/95 shadow-luxe"
+              : "top-4 mx-4 md:mx-auto max-w-5xl rounded-full border border-border/50 bg-background/70 shadow-soft")
+          : "top-0 bg-transparent border-b border-transparent"
       }`}
       style={scrolled ? { backdropFilter: "blur(24px) saturate(1.6)", WebkitBackdropFilter: "blur(24px) saturate(1.6)" } : undefined}
     >
       <div
-        className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-all duration-500 ease-apple ${
-          scrolled ? "h-16" : "h-20"
+        className={`px-6 sm:px-8 flex items-center justify-between transition-all duration-500 ease-apple ${
+          scrolled ? "h-14" : "h-20"
         }`}
       >
         <Link to="/" className="flex items-center gap-3 group">
@@ -77,8 +79,7 @@ export function Header() {
       </div>
 
       {open && (
-        <div className="lg:hidden glass border-t border-border animate-fade-up">
-          <div className="px-4 py-4 space-y-1">
+        <div className="lg:hidden border-t border-border/40 mt-1 px-4 py-4 space-y-1 animate-fade-up">
             {NAV.map((n) => (
               <Link
                 key={n.to}
@@ -94,7 +95,6 @@ export function Header() {
               <Link to="/contacto" onClick={() => setOpen(false)}>Agenda tu evaluación</Link>
             </Button>
           </div>
-        </div>
       )}
     </header>
   );
