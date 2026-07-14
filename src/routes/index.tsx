@@ -251,15 +251,15 @@ function Home() {
       <Section eyebrow="Servicios" title="Todo lo que tu audición necesita, en un solo lugar" className="reveal-soft">
         <div className="grid md:grid-cols-3 gap-6">
           {[
-            "Evaluación audiológica integral",
-            "Audiometría tonal y vocal",
+            "Video otoscopia",
+            "Audiometría",
+            "Logoaudiometría",
             "Adaptación de audífonos",
             "Programación y ajuste fino",
             "Venta de audífonos premium",
             "Accesorios y conectividad",
             "Limpieza y mantenimiento",
             "Reparación técnica",
-            "Asesoría familiar",
           ].map((s, i) => (
             <Card key={s} className="hover-lift group">
               <CardContent className="p-6 flex items-start gap-4">

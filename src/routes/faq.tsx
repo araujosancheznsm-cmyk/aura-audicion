@@ -9,7 +9,7 @@ const FAQS = [
   { q: "¿Cuánto tiempo se demora la adaptación de un audífono?", a: "El proceso inicial toma una sesión. Programamos controles a los 7, 30 y 90 días para ajustes finos." },
   { q: "¿Los audífonos tienen garantía?", a: "Sí, todos los modelos Oticon y Unitron cuentan con garantía oficial del fabricante (2 a 3 años según modelo)." },
   { q: "¿Puedo probar el audífono antes de comprarlo?", a: "Sí, ofrecemos pruebas controladas en consulta para que escuches la diferencia en distintos entornos." },
-  { q: "¿Atienden a niños?", a: "Sí, contamos con protocolos pediátricos y el modelo Oticon Play PX diseñado para niños." },
+  { q: "¿Venden audífonos para niños?", a: "Sí, contamos con el modelo Oticon Play PX, diseñado especialmente para niños con pérdida auditiva." },
   { q: "¿Hacen reparaciones?", a: "Sí, reparamos audífonos Oticon y Unitron con repuestos originales y servicio técnico certificado." },
   { q: "¿Tienen facilidades de pago?", a: "Aceptamos efectivo, tarjetas y financiamiento. Consulta con un asesor por las promociones vigentes." },
 ];
