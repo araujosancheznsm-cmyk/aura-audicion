@@ -66,10 +66,10 @@ function Home() {
           className="absolute inset-0 w-full h-full object-cover object-[60%_center]"
         />
 
-        {/* Gradient overlay — dark on left fading to transparent on right */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#08192b]/85 via-[#08192b]/55 to-[#08192b]/10" />
+        {/* Gradient overlay — lighter, left side only */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#08192b]/60 via-[#08192b]/25 to-transparent" />
         {/* Subtle bottom vignette */}
-        <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-[#08192b]/60 to-transparent" />
+        <div className="absolute bottom-0 inset-x-0 h-28 bg-gradient-to-t from-[#08192b]/30 to-transparent" />
 
         {/* Content */}
         <div className="relative w-full mx-auto max-w-7xl px-6 sm:px-10 lg:px-16 py-44">
@@ -101,7 +101,7 @@ function Home() {
                 <Link to="/contacto">Agenda tu evaluación <ArrowRight className="ml-1.5 size-4" /></Link>
               </Button>
               <Button asChild size="lg" variant="outline"
-                className="rounded-full h-12 px-8 border-white/40 text-white hover:bg-white/10 transition-all duration-500 text-[15px]">
+                className="rounded-full h-12 px-8 border-white/70 text-white bg-white/15 hover:bg-white/25 transition-all duration-500 text-[15px] backdrop-blur-sm">
                 <a href={SITE.whatsapp} target="_blank" rel="noopener">
                   <MessageCircle className="mr-1.5 size-4" /> WhatsApp
                 </a>
@@ -125,12 +125,12 @@ function Home() {
       </section>
 
       {/* BRAND MARQUEE */}
-      <div className="border-y border-border/60 overflow-hidden py-7 bg-background">
+      <div className="border-y border-border/70 overflow-hidden py-5 bg-background">
         <div className="flex gap-16 animate-marquee whitespace-nowrap">
           {[...Array(2)].map((_, k) => (
             <div key={k} className="flex gap-16 items-center shrink-0">
               {["Oticon", "Unitron", "Bluetooth®", "Recargable", "Made for iPhone", "Adaptación clínica", "Garantía extendida"].map((t) => (
-                <span key={t + k} className="font-display text-2xl text-foreground/40 tracking-tight transition-colors duration-500 hover:text-primary">
+                <span key={t + k} className="font-display text-xl text-foreground/65 tracking-tight transition-colors duration-500 hover:text-primary">
                   {t}
                 </span>
               ))}

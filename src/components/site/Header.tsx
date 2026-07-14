@@ -29,11 +29,11 @@ export function Header() {
       className={`fixed inset-x-0 z-50 transition-all duration-700 ease-apple ${
         scrolled
           ? (open
-              ? "top-4 mx-4 md:mx-auto max-w-5xl rounded-[2rem] border border-border/40 bg-background/80 shadow-luxe"
-              : "top-4 mx-4 md:mx-auto max-w-5xl rounded-full border border-border/30 bg-background/55 shadow-soft")
+              ? "top-4 mx-4 md:mx-auto max-w-5xl rounded-[2rem] border border-white/10 bg-[#08192b]/80 shadow-luxe"
+              : "top-4 mx-4 md:mx-auto max-w-5xl rounded-full border border-white/10 bg-[#08192b]/70 shadow-soft")
           : "top-0 bg-transparent border-b border-transparent"
       }`}
-      style={scrolled ? { backdropFilter: "blur(28px) saturate(1.8)", WebkitBackdropFilter: "blur(28px) saturate(1.8)" } : undefined}
+      style={scrolled ? { backdropFilter: "blur(28px) saturate(1.4)", WebkitBackdropFilter: "blur(28px) saturate(1.4)" } : undefined}
     >
       <div
         className={`px-6 sm:px-8 flex items-center justify-between transition-all duration-700 ease-apple ${
