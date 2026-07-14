@@ -55,69 +55,72 @@ function Home() {
 
   return (
     <>
-      {/* HERO */}
-      <section className="relative pt-32 pb-24 sm:pt-40 sm:pb-32 overflow-hidden bg-gradient-hero">
-        <div className="absolute -top-32 -right-32 size-[520px] rounded-full bg-primary/10 blur-[120px] pointer-events-none" />
-        <div className="absolute -bottom-32 -left-20 size-[460px] rounded-full bg-gold/15 blur-[120px] pointer-events-none" />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[1.05fr_1fr] gap-14 items-center">
+      {/* HERO — full viewport, cinematic */}
+      <section className="relative min-h-[100svh] overflow-hidden bg-gradient-hero flex items-center">
+        {/* single subtle glow — bottom left only */}
+        <div className="absolute -bottom-40 -left-20 size-[480px] rounded-full bg-gold/10 blur-[160px] pointer-events-none" />
+
+        <div className="relative w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center py-40 lg:py-0">
+          {/* Text */}
           <div className="animate-fade-up">
             <span className="inline-flex items-center gap-2 text-[10px] font-semibold tracking-[0.32em] uppercase text-gold">
               <Sparkles className="size-3.5" /> Centro audiológico premium
             </span>
-            <h1 className="mt-6 text-6xl sm:text-7xl lg:text-[5.5rem] font-display font-medium leading-[0.98] tracking-[-0.03em] text-foreground">
+            <h1 className="mt-8 text-[4.5rem] sm:text-[6rem] lg:text-[8rem] xl:text-[9rem] font-display font-medium leading-[0.90] tracking-[-0.04em] text-foreground">
               Vuelve a<br />
-              <span className="italic text-gradient-primary">escuchar</span> la vida.
+              <span className="italic text-gradient-primary">escuchar</span><br />
+              la vida.
             </h1>
-            <p className="mt-8 text-lg text-muted-foreground max-w-lg leading-relaxed">
+            <p className="mt-10 text-lg text-muted-foreground max-w-md leading-relaxed">
               Tecnología Oticon y Unitron, evaluaciones precisas y un
               acompañamiento humano en cada paso de tu salud auditiva.
             </p>
-            <div className="mt-10 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="bg-foreground text-background hover:bg-foreground/90 rounded-full h-12 px-6 btn-premium">
-                <Link to="/contacto">Agenda tu evaluación <ArrowRight className="ml-1 size-4" /></Link>
+            <div className="mt-12 flex flex-wrap gap-4">
+              <Button asChild size="lg" className="bg-foreground text-background hover:bg-foreground/90 rounded-full h-13 px-8 btn-premium text-[15px]">
+                <Link to="/contacto">Agenda tu evaluación <ArrowRight className="ml-1.5 size-4" /></Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full h-12 px-6 border-foreground/20 hover:bg-secondary transition-all duration-300">
-                <a href={SITE.whatsapp} target="_blank" rel="noopener"><MessageCircle className="mr-1 size-4" /> WhatsApp</a>
+              <Button asChild variant="outline" size="lg" className="rounded-full h-13 px-8 border-foreground/20 hover:bg-secondary transition-all duration-700 text-[15px]">
+                <a href={SITE.whatsapp} target="_blank" rel="noopener"><MessageCircle className="mr-1.5 size-4" /> WhatsApp</a>
               </Button>
             </div>
-            <div className="mt-14 grid grid-cols-3 gap-6 max-w-md">
+            <div className="mt-20 grid grid-cols-3 gap-8 max-w-sm">
               {[
                 { n: "+15", l: "Años de experiencia" },
                 { n: "+5k", l: "Pacientes atendidos" },
-                { n: "2", l: "Marcas premium" },
+                { n: "2",   l: "Marcas premium" },
               ].map((s) => (
-                <div key={s.l} className="transition-all hover:scale-105 duration-300">
-                  <div className="text-4xl font-display text-foreground font-semibold">{s.n}</div>
-                  <div className="text-xs text-muted-foreground mt-1.5 tracking-wide">{s.l}</div>
+                <div key={s.l}>
+                  <div className="text-5xl font-display text-foreground font-semibold">{s.n}</div>
+                  <div className="text-xs text-muted-foreground mt-2 tracking-wide leading-tight">{s.l}</div>
                 </div>
               ))}
             </div>
           </div>
-          <div className="relative animate-fade-up">
-            <div className="absolute -inset-8 bg-gradient-primary opacity-15 blur-3xl rounded-[3rem] pointer-events-none" />
-            <div className="relative rounded-[2.5rem] overflow-hidden shadow-luxe transition-all duration-700 hover:shadow-card hover:-translate-y-1">
-              <img src={hero} alt="Paciente sonriendo con audífono moderno" width={1600} height={1200} fetchPriority="high" decoding="async" className="w-full h-auto object-cover transition-transform duration-[1.5s] hover:scale-102" />
-            </div>
-            <div className="absolute -bottom-6 -left-6 glass rounded-2xl p-4 shadow-soft hidden sm:block animate-float">
-              <div className="flex items-center gap-3">
-                <div className="size-10 rounded-full bg-gradient-primary flex items-center justify-center"><Ear className="text-primary-foreground size-5" /></div>
-                <div>
-                  <div className="text-sm font-semibold">Audiometría digital</div>
-                  <div className="text-xs text-muted-foreground">Evaluación en 30 minutos</div>
-                </div>
-              </div>
+
+          {/* Image — tall, edge-close, minimal border radius */}
+          <div className="relative animate-fade-up lg:h-[88vh] max-h-[860px]" style={{ animationDelay: "120ms" }}>
+            <div className="relative h-full rounded-2xl overflow-hidden shadow-luxe">
+              <img
+                src={hero}
+                alt="Paciente sonriendo con audífono moderno"
+                width={1600}
+                height={1200}
+                fetchPriority="high"
+                decoding="async"
+                className="w-full h-full object-cover transition-transform duration-[2s] hover:scale-[1.03]"
+              />
             </div>
           </div>
         </div>
       </section>
 
       {/* BRAND MARQUEE */}
-      <div className="border-y border-border/60 overflow-hidden py-6 bg-background">
+      <div className="border-y border-border/60 overflow-hidden py-7 bg-background">
         <div className="flex gap-16 animate-marquee whitespace-nowrap">
           {[...Array(2)].map((_, k) => (
             <div key={k} className="flex gap-16 items-center shrink-0">
               {["Oticon", "Unitron", "Bluetooth®", "Recargable", "Made for iPhone", "Adaptación clínica", "Garantía extendida"].map((t) => (
-                <span key={t + k} className="font-display text-2xl text-foreground/40 tracking-tight transition-colors duration-300 hover:text-primary">
+                <span key={t + k} className="font-display text-2xl text-foreground/40 tracking-tight transition-colors duration-500 hover:text-primary">
                   {t}
                 </span>
               ))}
@@ -126,24 +129,24 @@ function Home() {
         </div>
       </div>
 
-      {/* PRODUCT SHOWCASE — Apple/Tesla style dark */}
-      <section className="relative py-24 sm:py-32 bg-gradient-ink text-white overflow-hidden reveal">
+      {/* PRODUCT SHOWCASE */}
+      <section className="relative py-32 sm:py-40 bg-gradient-ink text-white overflow-hidden reveal">
         <div className="absolute inset-0 opacity-[0.04] noise text-white pointer-events-none" />
         <div className="absolute top-40 left-1/2 -translate-x-1/2 size-[600px] rounded-full bg-primary/25 blur-[120px] pointer-events-none" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto">
             <div className="text-[10px] tracking-[0.32em] uppercase text-gold font-semibold">Catálogo</div>
-            <h2 className="mt-4 font-display text-5xl md:text-7xl leading-[0.98] tracking-tight">
+            <h2 className="mt-5 font-display text-5xl md:text-7xl leading-[0.94] tracking-[-0.03em]">
               Tecnología que se<br />
               <span className="italic text-white/70">siente invisible.</span>
             </h2>
-            <p className="mt-6 text-white/60 text-lg font-light">
+            <p className="mt-8 text-white/60 text-lg font-light leading-relaxed max-w-xl mx-auto">
               Modelos Oticon y Unitron con inteligencia artificial, conectividad
               Bluetooth y batería recargable para todo el día.
             </p>
           </div>
 
-          <div className="mt-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="mt-20 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {(featured ?? Array.from({ length: 4 })).map((a: any, i) => (
               <Link
                 key={a?.id ?? i}
@@ -151,8 +154,7 @@ function Home() {
                 params={a ? { slug: a.slug } : undefined as any}
                 className="group"
               >
-                <div className="relative aspect-[4/5] rounded-3xl bg-gradient-product overflow-hidden border border-white/5 group-hover:border-white/20 transition-all duration-500">
-                  {/* Subtle ambient glow behind the product on hover */}
+                <div className="relative aspect-[4/5] rounded-3xl bg-gradient-product overflow-hidden border border-white/5 group-hover:border-white/20 transition-all duration-700">
                   <div className="absolute inset-10 rounded-full bg-primary/25 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
                   {a?.main_image_url ? (
                     <img
@@ -176,9 +178,9 @@ function Home() {
                   )}
                 </div>
                 {a && (
-                  <div className="pt-4 px-1">
+                  <div className="pt-5 px-1">
                     <div className="text-[10px] uppercase tracking-[0.28em] text-gold/90 font-semibold">{a.brand}</div>
-                    <div className="mt-1.5 font-display text-xl leading-tight transition-colors duration-300 group-hover:text-primary-light">{a.model}</div>
+                    <div className="mt-1.5 font-display text-xl leading-tight transition-colors duration-500 group-hover:text-primary-light">{a.model}</div>
                     <div className="mt-1 text-sm text-white/50">{a.type}</div>
                   </div>
                 )}
@@ -186,8 +188,8 @@ function Home() {
             ))}
           </div>
 
-          <div className="mt-14 text-center">
-            <Button asChild size="lg" className="bg-white text-ink hover:bg-white/90 rounded-full h-12 px-6 btn-premium">
+          <div className="mt-16 text-center">
+            <Button asChild size="lg" className="bg-white text-ink hover:bg-white/90 rounded-full h-12 px-8 btn-premium">
               <Link to="/catalogo">Explorar el catálogo completo <ArrowRight className="ml-1 size-4" /></Link>
             </Button>
           </div>
@@ -196,51 +198,51 @@ function Home() {
 
       {/* TRUST */}
       <Section eyebrow="Por qué elegirnos" title="Atención con estándares de clínica privada" center className="reveal-soft">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {[
-            { i: ShieldCheck, t: "Diagnóstico certificado", d: "Audiometrías con equipos calibrados y protocolos clínicos." },
-            { i: HeadphonesIcon, t: "Audífonos premium", d: "Distribuidor de Oticon y Unitron con tecnología de última generación." },
-            { i: Stethoscope, t: "Adaptación personalizada", d: "Programación fina basada en tu estilo de vida y entorno sonoro." },
-            { i: Star, t: "Seguimiento de por vida", d: "Acompañamiento continuo, limpieza, reparación y mantenimiento." },
+            { i: ShieldCheck,    t: "Diagnóstico certificado",  d: "Audiometrías con equipos calibrados y protocolos clínicos." },
+            { i: HeadphonesIcon, t: "Audífonos premium",        d: "Distribuidor de Oticon y Unitron con tecnología de última generación." },
+            { i: Stethoscope,    t: "Adaptación personalizada", d: "Programación fina basada en tu estilo de vida y entorno sonoro." },
+            { i: Star,           t: "Seguimiento de por vida",  d: "Acompañamiento continuo, limpieza, reparación y mantenimiento." },
           ].map(({ i: Icon, t, d }) => (
             <Card key={t} className="hover-lift border-border/60 group">
-              <CardContent className="p-6">
-                <div className="size-12 rounded-2xl bg-gradient-primary flex items-center justify-center mb-4 transition-transform duration-500 group-hover:scale-110">
+              <CardContent className="p-8">
+                <div className="size-12 rounded-2xl bg-gradient-primary flex items-center justify-center mb-6 transition-transform duration-700 group-hover:scale-110">
                   <Icon className="text-primary-foreground size-6" />
                 </div>
-                <h3 className="text-lg font-semibold group-hover:text-primary transition-colors duration-300">{t}</h3>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{d}</p>
+                <h3 className="text-lg font-semibold group-hover:text-primary transition-colors duration-500">{t}</h3>
+                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{d}</p>
               </CardContent>
             </Card>
           ))}
         </div>
       </Section>
 
-      {/* TECH STRIP — interactive-looking capability chips */}
-      <section className="py-20 bg-secondary/40 border-y border-border/60 reveal">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+      {/* TECH STRIP */}
+      <section className="py-28 bg-secondary/40 border-y border-border/60 reveal">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <div className="text-[10px] tracking-[0.32em] uppercase text-gold font-semibold">Tecnología</div>
-            <h2 className="mt-4 font-display text-4xl md:text-5xl leading-tight">
+            <h2 className="mt-5 font-display text-4xl md:text-5xl leading-[1.0] tracking-[-0.03em]">
               Conectividad total,<br />
               <span className="italic text-primary">un solo toque.</span>
             </h2>
-            <p className="mt-6 text-muted-foreground leading-relaxed max-w-lg">
+            <p className="mt-8 text-muted-foreground leading-relaxed max-w-lg">
               Nuestros audífonos se conectan directo a tu smartphone, TV o
               transmisor personal, con calidad de estudio y control desde una app.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-5">
             {[
-              { i: Bluetooth, t: "Bluetooth LE", d: "Audio de baja latencia" },
-              { i: BatteryCharging, t: "Recarga rápida", d: "24 h con una carga" },
-              { i: Sparkles, t: "IA integrada", d: "Filtra ruido de fondo" },
-              { i: ShieldCheck, t: "IP68", d: "Resistente a humedad" },
+              { i: Bluetooth,      t: "Bluetooth LE",  d: "Audio de baja latencia" },
+              { i: BatteryCharging,t: "Recarga rápida", d: "24 h con una carga" },
+              { i: Sparkles,       t: "IA integrada",  d: "Filtra ruido de fondo" },
+              { i: ShieldCheck,    t: "IP68",          d: "Resistente a humedad" },
             ].map(({ i: I, t, d }) => (
-              <div key={t} className="rounded-2xl bg-background border border-border/60 p-5 hover-lift group">
-                <I className="size-6 text-primary transition-transform duration-500 group-hover:scale-110" />
-                <div className="mt-3 font-semibold group-hover:text-primary transition-colors duration-300">{t}</div>
-                <div className="text-xs text-muted-foreground mt-1">{d}</div>
+              <div key={t} className="rounded-2xl bg-background border border-border/60 p-6 hover-lift group">
+                <I className="size-6 text-primary transition-transform duration-700 group-hover:scale-110" />
+                <div className="mt-4 font-semibold group-hover:text-primary transition-colors duration-500">{t}</div>
+                <div className="text-xs text-muted-foreground mt-1.5">{d}</div>
               </div>
             ))}
           </div>
@@ -249,7 +251,7 @@ function Home() {
 
       {/* SERVICES preview */}
       <Section eyebrow="Servicios" title="Todo lo que tu audición necesita, en un solo lugar" className="reveal-soft">
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-8">
           {[
             "Video otoscopia",
             "Audiometría",
@@ -262,12 +264,12 @@ function Home() {
             "Reparación técnica",
           ].map((s, i) => (
             <Card key={s} className="hover-lift group">
-              <CardContent className="p-6 flex items-start gap-4">
-                <span className="font-display text-3xl text-gold/70 transition-transform duration-500 group-hover:scale-110">{String(i + 1).padStart(2, "0")}</span>
+              <CardContent className="p-8 flex items-start gap-5">
+                <span className="font-display text-3xl text-gold/70 transition-transform duration-700 group-hover:scale-110 shrink-0">{String(i + 1).padStart(2, "0")}</span>
                 <div>
-                  <h3 className="font-semibold group-hover:text-primary transition-colors duration-300">{s}</h3>
-                  <Link to="/servicios" className="text-sm text-primary hover:underline mt-1 inline-flex items-center gap-1">
-                    Saber más <ArrowRight className="size-3 transition-transform duration-300 group-hover:translate-x-0.5" />
+                  <h3 className="font-semibold group-hover:text-primary transition-colors duration-500">{s}</h3>
+                  <Link to="/servicios" className="text-sm text-primary hover:underline mt-2 inline-flex items-center gap-1">
+                    Saber más <ArrowRight className="size-3 transition-transform duration-500 group-hover:translate-x-0.5" />
                   </Link>
                 </div>
               </CardContent>
@@ -278,17 +280,17 @@ function Home() {
 
       {/* TESTIMONIALS */}
       <Section eyebrow="Testimonios" title="Historias que vuelven a sonar" className="bg-secondary/40 reveal-soft" center>
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-8">
           {[
             { n: "Carmen R.", t: "Volví a escuchar a mis nietos con claridad. El equipo de Aura es paciente y muy profesional.", a: "Lima" },
-            { n: "Luis P.", t: "La diferencia con mis audífonos anteriores es enorme. Los ajustes son precisos y el seguimiento impecable.", a: "Independencia" },
-            { n: "Marta S.", t: "Una atención cálida, instalaciones modernas y tecnología de primer nivel. Recomendado al 100%.", a: "Los Olivos" },
+            { n: "Luis P.",   t: "La diferencia con mis audífonos anteriores es enorme. Los ajustes son precisos y el seguimiento impecable.", a: "Independencia" },
+            { n: "Marta S.",  t: "Una atención cálida, instalaciones modernas y tecnología de primer nivel. Recomendado al 100%.", a: "Los Olivos" },
           ].map((t) => (
             <Card key={t.n} className="text-left hover-lift group">
-              <CardContent className="p-6">
-                <div className="flex gap-1 text-gold mb-3 transition-transform duration-500 group-hover:scale-102">{Array.from({ length: 5 }).map((_, i) => <Star key={i} className="size-4 fill-current" />)}</div>
-                <p className="text-foreground/80 leading-relaxed">"{t.t}"</p>
-                <div className="mt-4 text-sm"><span className="font-semibold group-hover:text-primary transition-colors duration-300">{t.n}</span> <span className="text-muted-foreground">· {t.a}</span></div>
+              <CardContent className="p-8">
+                <div className="flex gap-1 text-gold mb-4 transition-transform duration-700 group-hover:scale-102">{Array.from({ length: 5 }).map((_, i) => <Star key={i} className="size-4 fill-current" />)}</div>
+                <p className="text-foreground/80 leading-relaxed text-[15px]">"{t.t}"</p>
+                <div className="mt-6 text-sm"><span className="font-semibold group-hover:text-primary transition-colors duration-500">{t.n}</span> <span className="text-muted-foreground">· {t.a}</span></div>
               </CardContent>
             </Card>
           ))}
@@ -297,42 +299,42 @@ function Home() {
 
       {/* CTA */}
       <Section className="reveal-soft">
-        <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-ink p-10 sm:p-16 text-white shadow-luxe">
+        <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-ink p-12 sm:p-20 text-white shadow-luxe">
           <div className="absolute -top-20 -right-20 size-72 rounded-full bg-gold/20 blur-3xl" />
           <div className="absolute -bottom-20 -left-20 size-72 rounded-full bg-primary/30 blur-3xl" />
-          <div className="relative grid lg:grid-cols-2 gap-10 items-center">
+          <div className="relative grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="text-[10px] tracking-[0.32em] uppercase text-gold/90 font-semibold">Evaluación gratuita</div>
-              <h2 className="mt-4 text-4xl sm:text-6xl font-display leading-[1] tracking-tight">
+              <h2 className="mt-5 text-5xl sm:text-6xl font-display leading-[0.95] tracking-[-0.03em]">
                 Agenda tu<br />
                 <span className="italic text-white/70">primera cita.</span>
               </h2>
-              <p className="mt-5 text-white/70 max-w-md font-light">Sin compromiso. Te explicamos paso a paso el estado de tu audición y las mejores opciones para ti.</p>
+              <p className="mt-7 text-white/70 max-w-md font-light leading-relaxed">Sin compromiso. Te explicamos paso a paso el estado de tu audición y las mejores opciones para ti.</p>
             </div>
-            <div className="flex flex-wrap gap-3 lg:justify-end">
-              <Button asChild size="lg" className="bg-white text-ink hover:bg-white/90 rounded-full h-12 px-6 btn-premium"><Link to="/contacto">Agendar ahora</Link></Button>
+            <div className="flex flex-wrap gap-4 lg:justify-end">
+              <Button asChild size="lg" className="bg-white text-ink hover:bg-white/90 rounded-full h-13 px-8 btn-premium text-[15px]"><Link to="/contacto">Agendar ahora</Link></Button>
             </div>
           </div>
         </div>
       </Section>
 
       {/* Clinic */}
-      <Section eyebrow="Nuestro espacio" title="Una clínica pensada para tu comodidad" className="pb-32 reveal-soft">
-        <div className="grid lg:grid-cols-2 gap-10 items-center">
-          <div className="rounded-3xl overflow-hidden shadow-card transition-all duration-700 hover:shadow-luxe hover:-translate-y-1">
-            <img src={clinic} alt="Cabina audiológica Aura" width={1600} height={1000} loading="lazy" className="w-full h-auto transition-transform duration-[1.5s] hover:scale-102" />
+      <Section eyebrow="Nuestro espacio" title="Una clínica pensada para tu comodidad" className="pb-40 reveal-soft">
+        <div className="grid lg:grid-cols-2 gap-14 items-center">
+          <div className="rounded-2xl overflow-hidden shadow-card transition-all duration-700 hover:shadow-luxe hover:-translate-y-1">
+            <img src={clinic} alt="Cabina audiológica Aura" width={1600} height={1000} loading="lazy" className="w-full h-auto transition-transform duration-[2s] hover:scale-[1.03]" />
           </div>
           <div>
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-xl text-muted-foreground leading-relaxed">
               Cabina insonorizada, equipos audiométricos calibrados y espacios pensados para
               que tu visita sea tranquila y precisa. Nuestro equipo audiológico te acompañará
               en cada etapa.
             </p>
-            <div className="mt-6 grid sm:grid-cols-2 gap-4">
+            <div className="mt-10 grid sm:grid-cols-2 gap-4">
               {[Wrench, ShieldCheck, HeadphonesIcon, Star].map((I, i) => (
-                <div key={i} className="flex items-center gap-3 rounded-xl border border-border p-4 hover:border-primary/50 transition-colors duration-300 group">
-                  <I className="text-primary size-5 transition-transform duration-500 group-hover:rotate-12" />
-                  <span className="text-sm font-medium group-hover:text-primary transition-colors duration-300">{["Equipos calibrados","Protocolos clínicos","Audífonos premium","Atención 5 estrellas"][i]}</span>
+                <div key={i} className="flex items-center gap-4 rounded-xl border border-border p-5 hover:border-primary/50 transition-colors duration-500 group">
+                  <I className="text-primary size-5 transition-transform duration-700 group-hover:rotate-12 shrink-0" />
+                  <span className="text-sm font-medium group-hover:text-primary transition-colors duration-500">{["Equipos calibrados","Protocolos clínicos","Audífonos premium","Atención 5 estrellas"][i]}</span>
                 </div>
               ))}
             </div>

@@ -15,7 +15,7 @@ export function Header() {
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(() => {
-        setScrolled(window.scrollY > 12);
+        setScrolled(window.scrollY > 24);
         ticking = false;
       });
     };
@@ -26,17 +26,17 @@ export function Header() {
 
   return (
     <header
-      className={`fixed inset-x-0 z-50 transition-all duration-500 ease-apple ${
+      className={`fixed inset-x-0 z-50 transition-all duration-700 ease-apple ${
         scrolled
           ? (open
-              ? "top-4 mx-4 md:mx-auto max-w-5xl rounded-[2rem] border border-border/50 bg-background/95 shadow-luxe"
-              : "top-4 mx-4 md:mx-auto max-w-5xl rounded-full border border-border/50 bg-background/70 shadow-soft")
+              ? "top-4 mx-4 md:mx-auto max-w-5xl rounded-[2rem] border border-border/40 bg-background/80 shadow-luxe"
+              : "top-4 mx-4 md:mx-auto max-w-5xl rounded-full border border-border/30 bg-background/55 shadow-soft")
           : "top-0 bg-transparent border-b border-transparent"
       }`}
-      style={scrolled ? { backdropFilter: "blur(24px) saturate(1.6)", WebkitBackdropFilter: "blur(24px) saturate(1.6)" } : undefined}
+      style={scrolled ? { backdropFilter: "blur(28px) saturate(1.8)", WebkitBackdropFilter: "blur(28px) saturate(1.8)" } : undefined}
     >
       <div
-        className={`px-6 sm:px-8 flex items-center justify-between transition-all duration-500 ease-apple ${
+        className={`px-6 sm:px-8 flex items-center justify-between transition-all duration-700 ease-apple ${
           scrolled ? "h-14" : "h-20"
         }`}
       >
