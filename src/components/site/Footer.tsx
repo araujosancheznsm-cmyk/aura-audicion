@@ -3,6 +3,35 @@ import { Phone, MapPin, Clock, Mail, MessageCircle, Instagram } from "lucide-rea
 import { Logo } from "./Logo";
 import { NAV, SITE } from "@/lib/site";
 
+function SgsLogo({ label }: { label: string }) {
+  return (
+    <svg
+      viewBox="0 0 64 64"
+      className="h-11 hover:opacity-100 transition-opacity"
+      style={{ opacity: 0.6 }}
+      aria-label={`SGS ${label}`}
+    >
+      {/* outer ring */}
+      <circle cx="32" cy="32" r="29" fill="none" stroke="white" strokeWidth="2.5" />
+      {/* inner ring */}
+      <circle cx="32" cy="32" r="22" fill="none" stroke="white" strokeWidth="1" />
+      {/* checkmark */}
+      <polyline
+        points="19,33 27,41 45,22"
+        fill="none"
+        stroke="white"
+        strokeWidth="3.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      {/* label top */}
+      <text x="32" y="17" fontFamily="Arial, sans-serif" fontSize="5.5" fontWeight="600" textAnchor="middle" fill="white">{label}</text>
+      {/* SGS bottom */}
+      <text x="32" y="58" fontFamily="Arial, sans-serif" fontSize="9" fontWeight="700" textAnchor="middle" fill="white">SGS</text>
+    </svg>
+  );
+}
+
 export function Footer() {
   return (
     <footer className="mt-24 bg-foreground text-background">
@@ -41,6 +70,38 @@ export function Footer() {
           </ul>
         </div>
       </div>
+      {/* Marcas y certificaciones */}
+      <div className="border-t border-background/10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 flex flex-wrap items-center justify-center gap-10 md:gap-14">
+          {/* Unitron */}
+          <span
+            className="text-2xl font-light tracking-wide text-background/60 hover:text-background transition-colors select-none"
+            style={{ fontFamily: "Arial, sans-serif", letterSpacing: "0.04em" }}
+            aria-label="Unitron"
+          >
+            unitron
+          </span>
+
+          {/* Oticon */}
+          <span
+            className="text-2xl font-light tracking-wide text-background/60 hover:text-background transition-colors select-none"
+            style={{ fontFamily: "Arial, sans-serif", letterSpacing: "0.04em" }}
+            aria-label="Oticon"
+          >
+            oticon
+          </span>
+
+          {/* Separador */}
+          <span className="hidden md:block h-8 w-px bg-background/20" />
+
+          {/* SGS ISO 9001 */}
+          <SgsLogo label="ISO 9001" />
+
+          {/* SGS ISO 13485 */}
+          <SgsLogo label="ISO 13485" />
+        </div>
+      </div>
+
       <div className="border-t border-background/10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row justify-between text-xs text-background/60">
           <p>© {new Date().getFullYear()} Aura Audición. Todos los derechos reservados.</p>
