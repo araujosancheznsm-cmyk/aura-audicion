@@ -55,60 +55,70 @@ function Home() {
 
   return (
     <>
-      {/* HERO — full viewport, cinematic */}
-      <section className="relative min-h-[100svh] overflow-hidden bg-gradient-hero flex items-center">
-        {/* single subtle glow — bottom left only */}
-        <div className="absolute -bottom-40 -left-20 size-[480px] rounded-full bg-gold/10 blur-[160px] pointer-events-none" />
+      {/* HERO — full viewport, image background with text overlay */}
+      <section className="relative min-h-[100svh] overflow-hidden flex items-center">
+        {/* Background image */}
+        <img
+          src="/hero-couple.jpg"
+          alt="Pareja adulta recuperando su calidad de vida auditiva"
+          fetchPriority="high"
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover object-[60%_center]"
+        />
 
-        <div className="relative w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center py-40 lg:py-0">
-          {/* Text */}
-          <div className="animate-fade-up">
+        {/* Gradient overlay — dark on left fading to transparent on right */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#08192b]/85 via-[#08192b]/55 to-[#08192b]/10" />
+        {/* Subtle bottom vignette */}
+        <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-[#08192b]/60 to-transparent" />
+
+        {/* Content */}
+        <div className="relative w-full mx-auto max-w-7xl px-6 sm:px-10 lg:px-16 py-44">
+          <div className="max-w-[520px] animate-fade-up">
             <span className="inline-flex items-center gap-2 text-[10px] font-semibold tracking-[0.32em] uppercase text-gold">
               <Sparkles className="size-3.5" /> Centro audiológico premium
             </span>
-            <h1 className="mt-8 text-[4.5rem] sm:text-[6rem] lg:text-[8rem] xl:text-[9rem] font-display font-medium leading-[0.90] tracking-[-0.04em] text-foreground">
+
+            <h1 className="mt-7 font-display font-medium leading-[0.88] tracking-[-0.04em] text-white
+                           text-[3.8rem] sm:text-[5rem] lg:text-[6.5rem]">
               Vuelve a<br />
-              <span className="italic text-gradient-primary">escuchar</span><br />
+              <em className="not-italic"
+                style={{ background: "linear-gradient(135deg,#7EC8D8 0%,#A8D5E2 100%)",
+                         WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+                         backgroundClip: "text" }}>
+                escuchar
+              </em><br />
               la vida.
             </h1>
-            <p className="mt-10 text-lg text-muted-foreground max-w-md leading-relaxed">
+
+            <p className="mt-8 text-base sm:text-lg text-white/75 max-w-[400px] leading-relaxed">
               Tecnología Oticon y Unitron, evaluaciones precisas y un
               acompañamiento humano en cada paso de tu salud auditiva.
             </p>
-            <div className="mt-12 flex flex-wrap gap-4">
-              <Button asChild size="lg" className="bg-foreground text-background hover:bg-foreground/90 rounded-full h-13 px-8 btn-premium text-[15px]">
+
+            <div className="mt-10 flex flex-wrap gap-4">
+              <Button asChild size="lg"
+                className="bg-white text-[#08192b] hover:bg-white/90 rounded-full h-12 px-8 text-[15px] font-semibold shadow-luxe">
                 <Link to="/contacto">Agenda tu evaluación <ArrowRight className="ml-1.5 size-4" /></Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full h-13 px-8 border-foreground/20 hover:bg-secondary transition-all duration-700 text-[15px]">
-                <a href={SITE.whatsapp} target="_blank" rel="noopener"><MessageCircle className="mr-1.5 size-4" /> WhatsApp</a>
+              <Button asChild size="lg" variant="outline"
+                className="rounded-full h-12 px-8 border-white/40 text-white hover:bg-white/10 transition-all duration-500 text-[15px]">
+                <a href={SITE.whatsapp} target="_blank" rel="noopener">
+                  <MessageCircle className="mr-1.5 size-4" /> WhatsApp
+                </a>
               </Button>
             </div>
-            <div className="mt-20 grid grid-cols-3 gap-8 max-w-sm">
+
+            <div className="mt-16 flex gap-10">
               {[
                 { n: "+15", l: "Años de experiencia" },
                 { n: "+5k", l: "Pacientes atendidos" },
                 { n: "2",   l: "Marcas premium" },
               ].map((s) => (
-                <div key={s.l}>
-                  <div className="text-5xl font-display text-foreground font-semibold">{s.n}</div>
-                  <div className="text-xs text-muted-foreground mt-2 tracking-wide leading-tight">{s.l}</div>
+                <div key={s.l} className="border-l border-white/20 pl-5 first:border-l-0 first:pl-0">
+                  <div className="text-4xl font-display text-white font-semibold">{s.n}</div>
+                  <div className="text-xs text-white/55 mt-1.5 leading-tight">{s.l}</div>
                 </div>
               ))}
-            </div>
-          </div>
-
-          {/* Image — tall, edge-close, minimal border radius */}
-          <div className="relative animate-fade-up lg:h-[88vh] max-h-[860px]" style={{ animationDelay: "120ms" }}>
-            <div className="relative h-full rounded-2xl overflow-hidden shadow-luxe">
-              <img
-                src={hero}
-                alt="Paciente sonriendo con audífono moderno"
-                width={1600}
-                height={1200}
-                fetchPriority="high"
-                decoding="async"
-                className="w-full h-full object-cover transition-transform duration-[2s] hover:scale-[1.03]"
-              />
             </div>
           </div>
         </div>
