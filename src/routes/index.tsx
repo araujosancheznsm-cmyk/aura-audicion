@@ -123,12 +123,12 @@ function Home() {
       </section>
 
       {/* BRAND MARQUEE */}
-      <div className="border-y border-border/70 overflow-hidden py-5 bg-background">
+      <div className="border-y border-white/10 overflow-hidden py-5 bg-[#08192b]">
         <div className="flex gap-16 animate-marquee whitespace-nowrap">
           {[...Array(2)].map((_, k) => (
             <div key={k} className="flex gap-16 items-center shrink-0">
               {["Oticon", "Unitron", "Bluetooth®", "Recargable", "Made for iPhone", "Adaptación clínica", "Garantía extendida"].map((t) => (
-                <span key={t + k} className="font-display text-xl text-foreground/65 tracking-tight transition-colors duration-500 hover:text-primary">
+                <span key={t + k} className="font-display text-xl text-white/55 tracking-tight transition-colors duration-500 hover:text-white/90">
                   {t}
                 </span>
               ))}
