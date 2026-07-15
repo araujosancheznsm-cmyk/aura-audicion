@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import hero from "@/assets/hero-patient.jpg";
+import heroCouple from "@/assets/hero-couple.jpg";
 import clinic from "@/assets/clinic.jpg";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/site/Section";
@@ -59,7 +60,7 @@ function Home() {
       <section className="relative min-h-[85svh] overflow-hidden flex items-center">
         {/* Background image */}
         <img
-          src="/hero-couple.jpg"
+          src={heroCouple}
           alt="Pareja adulta recuperando su calidad de vida auditiva"
           fetchPriority="high"
           decoding="async"
