@@ -123,12 +123,12 @@ function Home() {
       </section>
 
       {/* BRAND MARQUEE */}
-      <div className="border-y border-white/10 overflow-hidden py-5 bg-[#08192b]">
+      <div className="border-y border-border/70 overflow-hidden py-5 bg-background">
         <div className="flex gap-16 animate-marquee whitespace-nowrap">
           {[...Array(2)].map((_, k) => (
             <div key={k} className="flex gap-16 items-center shrink-0">
               {["Oticon", "Unitron", "Bluetooth®", "Recargable", "Made for iPhone", "Adaptación clínica", "Garantía extendida"].map((t) => (
-                <span key={t + k} className="font-display text-xl text-white/55 tracking-tight transition-colors duration-500 hover:text-white/90">
+                <span key={t + k} className="font-display text-xl text-foreground/65 tracking-tight transition-colors duration-500 hover:text-primary">
                   {t}
                 </span>
               ))}
@@ -138,7 +138,7 @@ function Home() {
       </div>
 
       {/* PRODUCT SHOWCASE */}
-      <section className="relative py-32 sm:py-40 bg-gradient-ink text-white overflow-hidden reveal">
+      <section className="relative py-32 sm:py-40 bg-gradient-ink text-white overflow-hidden">
         <div className="absolute inset-0 opacity-[0.04] noise text-white pointer-events-none" />
         <div className="absolute top-40 left-1/2 -translate-x-1/2 size-[600px] rounded-full bg-primary/25 blur-[120px] pointer-events-none" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
