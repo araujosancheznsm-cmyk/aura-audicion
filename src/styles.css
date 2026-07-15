@@ -130,7 +130,7 @@ a[href*="lovable.app"][target="_blank"][class*="badge" i] {
   * { border-color: var(--color-border); }
   html { scroll-behavior: smooth; }
   body {
-    background-color: var(--color-background);
+    background-color: #08192b;
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
