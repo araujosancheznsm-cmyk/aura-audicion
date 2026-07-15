@@ -68,8 +68,6 @@ function Home() {
 
         {/* Gradient overlay — lighter, left side only */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#08192b]/60 via-[#08192b]/25 to-transparent" />
-        {/* Subtle bottom vignette */}
-        <div className="absolute bottom-0 inset-x-0 h-28 bg-gradient-to-t from-[#08192b]/30 to-transparent" />
 
         {/* Content */}
         <div className="relative w-full mx-auto max-w-7xl px-6 sm:px-10 lg:px-16 py-24">
