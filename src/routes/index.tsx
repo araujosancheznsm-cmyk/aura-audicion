@@ -56,14 +56,14 @@ function Home() {
   return (
     <>
       {/* HERO — full viewport, image background with text overlay */}
-      <section className="relative min-h-[75svh] overflow-hidden flex items-center">
+      <section className="relative min-h-[85svh] overflow-hidden flex items-center">
         {/* Background image */}
         <img
           src="/hero-couple.jpg"
           alt="Pareja adulta recuperando su calidad de vida auditiva"
           fetchPriority="high"
           decoding="async"
-          className="absolute inset-0 w-full h-full object-cover object-[60%_center]"
+          className="absolute inset-0 w-full h-full object-cover object-[60%_15%]"
         />
 
         {/* Gradient overlay — lighter, left side only */}
