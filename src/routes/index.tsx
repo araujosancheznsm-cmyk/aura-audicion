@@ -56,7 +56,7 @@ function Home() {
   return (
     <>
       {/* HERO — full viewport, image background with text overlay */}
-      <section className="relative min-h-[100svh] overflow-hidden flex items-center">
+      <section className="relative min-h-[75svh] overflow-hidden flex items-center">
         {/* Background image */}
         <img
           src="/hero-couple.jpg"
@@ -72,7 +72,7 @@ function Home() {
         <div className="absolute bottom-0 inset-x-0 h-28 bg-gradient-to-t from-[#08192b]/30 to-transparent" />
 
         {/* Content */}
-        <div className="relative w-full mx-auto max-w-7xl px-6 sm:px-10 lg:px-16 py-44">
+        <div className="relative w-full mx-auto max-w-7xl px-6 sm:px-10 lg:px-16 py-24">
           <div className="max-w-[520px] animate-fade-up">
             <span className="inline-flex items-center gap-2 text-[10px] font-semibold tracking-[0.32em] uppercase text-gold">
               <Sparkles className="size-3.5" /> Centro audiológico premium
